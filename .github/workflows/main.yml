@@ -1,0 +1,60 @@
+name: CI
+
+on:
+    pull_request:
+        branches:
+            - 'main'
+    push:
+        branches:
+            - 'main'
+
+jobs:
+    verifyproblems:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              id: checkout
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
+
+            - name: Get changed files
+              id: changed-files
+              uses: tj-actions/changed-files@v35
+
+            - name: Get changed problems
+              id: changed-problems
+              run: |
+                  set -e
+                  echo "Creating file CHANGED_FILES"
+                  printf "%s\n" ${{ steps.changed-files.outputs.all_changed_files }} > $GITHUB_WORKSPACE/CHANGED_FILES
+                  echo "File created"
+                  echo "Creating file CHANGED_PROBLEMS"
+                  grep "^problems/" "$GITHUB_WORKSPACE/CHANGED_FILES" | awk -F/ '{ print $2 }' | sort -u > $GITHUB_WORKSPACE/CHANGED_PROBLEMS
+                  echo "File created"
+                  cat $GITHUB_WORKSPACE/CHANGED_PROBLEMS
+            
+            - name: Set pull request number in environment variable
+              if: github.event_name == 'pull_request'
+              run: echo PR_NUMBER=${{ github.event.number }} >> $GITHUB_ENV
+
+            - name: Additional checks for changed problems
+              id: additional-checks
+              run: |
+                  $GITHUB_WORKSPACE/scripts/clear_labels.sh
+                  $GITHUB_WORKSPACE/scripts/check_all.sh $GITHUB_WORKSPACE
+              env:
+                  USER_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+                  ORG_NAME: ForritunarkeppniFramhaldsskolanna
+                  REPOSITORY_NAME: FK2023
+
+            
+            - name: Verify problems
+              id: verify-problems
+              uses: ForritunarkeppniFramhaldsskolanna/verifyproblem@v3
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: pdfs
+                  path: ${{ github.workspace }}/problems/*.pdf
