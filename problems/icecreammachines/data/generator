@@ -2,15 +2,57 @@
 PPATH=$(realpath ..)
 . ../../../testdata_tools/gen.sh
 
-use_solution arnar_100.py
+use_solution arnar_fast_fif_100.java
 
 compile random_generator.py
 
 samplegroup
 sample 1
-sample 2
 
-group GA 100
-for i in {01..40}; do
-tc GA-$i random_generator
+group GA 10
+tc GA-01 random_generator 10**6 10**6 10 10 1 1
+for i in {02..04}; do
+tc GA-$i random_generator 1 10**5 1 10 1 1
+done;
+
+group GB 15
+include_group GA
+tc GB-01 random_generator 10**5 10**5 10 10 2 2
+for i in {02..05}; do
+tc GB-$i random_generator 1 10**5 1 10 2 2
+done;
+
+group GC 20
+include_group GB
+tc GC-01 random_generator 10**5 10**5 10 10 5 5
+for i in {02..05}; do
+tc GC-$i random_generator 1 10**5 1 10 1 5
+done;
+
+group GD 10
+tc GD-01 random_generator 500 500 50 50 50 50
+for i in {02..10}; do
+tc GD-$i random_generator 1 500 1 50 1 50
+done;
+
+group GE 10
+include_group GD
+tc GE-01 random_generator 1000 1000 100 100 100 100
+for i in {02..10}; do
+tc GE-$i random_generator 1 1000 1 100 1 100
+done;
+
+group GF 15
+include_group GC
+include_group GE
+tc GF-01 random_generator 10**6 10**6 100 100 100 100
+for i in {02..04}; do
+tc GF-$i random_generator 1 10**6 1 100 1 100
+done;
+
+group GG 20
+include_group GF
+tc GG-01 random_generator 10**6 10**6 10**6 10**6 10**6 10**6
+for i in {02..04}; do
+tc GG-$i random_generator 1 10**6 1 10**6 1 10**6
 done;
