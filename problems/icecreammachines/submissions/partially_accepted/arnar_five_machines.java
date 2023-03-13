@@ -36,73 +36,115 @@ class State {
 
 }
 
+class Kattio extends PrintWriter {
+    public Kattio(InputStream i) {
+        super(new BufferedOutputStream(System.out));
+        r = new BufferedReader(new InputStreamReader(i));
+    }
+    public Kattio(InputStream i, OutputStream o) {
+        super(new BufferedOutputStream(o));
+        r = new BufferedReader(new InputStreamReader(i));
+    }
+
+    public boolean hasMoreTokens() {
+        return peekToken() != null;
+    }
+
+    public int getInt() {
+        return Integer.parseInt(nextToken());
+    }
+
+    public double getDouble() {
+        return Double.parseDouble(nextToken());
+    }
+
+    public long getLong() {
+        return Long.parseLong(nextToken());
+    }
+
+    public String getWord() {
+        return nextToken();
+    }
+
+    private BufferedReader r;
+    private String line;
+    private StringTokenizer st;
+    private String token;
+
+    private String peekToken() {
+        if (token == null)
+            try {
+                while (st == null || !st.hasMoreTokens()) {
+                    line = r.readLine();
+                    if (line == null) return null;
+                    st = new StringTokenizer(line);
+                }
+                token = st.nextToken();
+            } catch (IOException e) { }
+        return token;
+    }
+
+    private String nextToken() {
+        String ans = peekToken();
+        token = null;
+        return ans;
+    }
+}
 
 public class arnar_five_machines {
     static int customerCount = 0, flavorCount = 0, machineCount = 0;
     static HashMap<State, Integer> mem;
     static ArrayList<Integer> choices;
-    static PrintWriter out;
-    
-    public static ArrayList<State> switchOptions(State s, int flavor) {
-        int index = s.index;
-        int using = s.using;
-        ArrayList<State> result = new ArrayList<State>();
-        if (((using >> flavor) & 1) == 1) {
-            result.add(new State(index + 1, using));
-            return result;
-        }
-        ArrayList<Integer> setBits = new ArrayList<Integer>();
-        for (int i = 0; i < flavorCount; i++) {
-            if (((using >> i) & 1) == 1) {
-                setBits.add(i);
-            }
-        }
-        if (setBits.size() < machineCount) {
-            result.add(new State(index + 1, using | (1 << flavor)));
-            return result;
-        }
-        for (int i : setBits) {
-            result.add(new State(index + 1, (using & ~(1 << i)) | (1 << flavor)));
-        }
-        return result;
-    }
+    static Kattio io;
     
     static int dp(State state) {
-        if (state.index == customerCount) {
+        int index = state.index;
+        int using = state.using;
+        if (index == customerCount) {
             return 0;
         }
         if (mem.containsKey(state)) {
             return mem.get(state);
         }
         int result = 1000000000;
-        int choice = choices.get(state.index);
-        for (State next : switchOptions(state, choice)) {
-            int cost = dp(next);
-            if (state.using != next.using) {
-                cost++;
+        int choice = choices.get(index);
+        if (((using >> choice) & 1) == 1) {
+            result = dp(new State(index + 1, using));
+        }
+        else if (Integer.bitCount(using) < machineCount) {
+            result = dp(new State(index + 1, using | (1 << choice))) + 1;
+        }
+        else {
+            for (int i = 0; i < flavorCount; i++) {
+                if (((using >> i) & 1) == 1) {
+                    State next = new State(index + 1, (using & ~(1 << i)) | (1 << choice));
+                    result = Math.min(result, dp(next) + 1);
+                }
             }
-            result = Math.min(result, cost);
         }
         mem.put(state, result);
         return result;
     }
     
     public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
-        out = new PrintWriter(System.out, false);
+        io = new Kattio(System.in, System.out);
         
-        customerCount = in.nextInt();
-        flavorCount = in.nextInt();
-        machineCount = in.nextInt();
+        customerCount = io.getInt();
+        flavorCount = io.getInt();
+        machineCount = io.getInt();
 
-        mem = new HashMap<State, Integer>();
+        mem = new HashMap<State, Integer>(customerCount, 0.5f);
         choices = new ArrayList<Integer>();
 
         for (int i = 0; i < customerCount; i++) {
-            choices.add(in.nextInt()-1);
+            choices.add(io.getInt()-1);
         }
 
-        out.println(dp(new State(0, 0)));
-        out.flush(); 
+        for(int i = customerCount - 1; i > 0; i-=10) {
+            dp(new State(i, 0));
+        }
+
+        io.println(dp(new State(0, 0)));
+        io.flush(); 
     }
 }
