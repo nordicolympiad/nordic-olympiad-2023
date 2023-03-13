@@ -143,13 +143,14 @@ public class arnar_fast_fif_100 {
         }
         
         TreeSet<FlavorTracker> flavors = new TreeSet<FlavorTracker>();
-        HashSet<Integer> active = new HashSet<Integer>();
         for (int i = 0; i < customerCount; i++) {
             int choice = choices.get(i);
             FlavorTracker cur = trackers.get(choice);
             boolean change = !flavors.contains(cur);
-            if (flavors.size() == machineCount) {
-                FlavorTracker toRemove = change ? flavors.last() : cur;
+            FlavorTracker toRemove = null;
+            if (!change) toRemove = cur;
+            else if (flavors.size() == machineCount) toRemove = flavors.last();
+            if (toRemove != null) {
                 flavors.remove(toRemove);
             }
             cur.advance();
