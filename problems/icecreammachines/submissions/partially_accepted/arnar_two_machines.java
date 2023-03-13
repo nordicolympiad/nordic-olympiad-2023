@@ -78,7 +78,40 @@ public class arnar_two_machines {
             choices.add(in.nextInt());
         }
 
-        out.println(dp(new State(0, -1, -1)));
+        Stack<State> stack = new Stack<State>();
+        State initialState = new State(0, -1, -1);
+        stack.add(initialState);
+        while(!stack.empty()) {
+            State state = stack.peek();
+            
+            if (state.index == customerCount) {
+                mem.put(state, 0);
+                stack.pop();
+                continue;
+            }
+
+            int choice = choices.get(state.index);
+
+            State next1 = new State(state.index + 1, choice, state.machine2);
+            State next2 = new State(state.index + 1, state.machine1, choice);
+            if (!mem.containsKey(next1)) {
+                stack.add(next1);
+            }
+            else if (!mem.containsKey(next2)) {
+                stack.add(next2);
+            }
+            else {
+                int use1 = mem.get(next1);
+                if (choice != state.machine1) use1++;
+                int use2 = mem.get(next2);
+                if (choice != state.machine2) use2++;
+                int result = Math.min(use1, use2);
+                mem.put(state, result);
+                stack.pop();
+            }
+        }
+
+        out.println(mem.get(initialState));
         out.flush(); 
     }
 }
