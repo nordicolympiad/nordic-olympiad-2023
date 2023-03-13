@@ -2,6 +2,63 @@ import java.util.*;
 import java.math.*;
 import java.io.*;
 
+class Kattio extends PrintWriter {
+    public Kattio(InputStream i) {
+	super(new BufferedOutputStream(System.out));
+	r = new BufferedReader(new InputStreamReader(i));
+    }
+    public Kattio(InputStream i, OutputStream o) {
+	super(new BufferedOutputStream(o));
+	r = new BufferedReader(new InputStreamReader(i));
+    }
+
+    public boolean hasMoreTokens() {
+	return peekToken() != null;
+    }
+
+    public int getInt() {
+	return Integer.parseInt(nextToken());
+    }
+
+    public double getDouble() {
+	return Double.parseDouble(nextToken());
+    }
+
+    public long getLong() {
+	return Long.parseLong(nextToken());
+    }
+
+    public String getWord() {
+	return nextToken();
+    }
+
+
+
+    private BufferedReader r;
+    private String line;
+    private StringTokenizer st;
+    private String token;
+
+    private String peekToken() {
+	if (token == null)
+	    try {
+		while (st == null || !st.hasMoreTokens()) {
+		    line = r.readLine();
+		    if (line == null) return null;
+		    st = new StringTokenizer(line);
+		}
+		token = st.nextToken();
+	    } catch (IOException e) { }
+	return token;
+    }
+
+    private String nextToken() {
+	String ans = peekToken();
+	token = null;
+	return ans;
+    }
+}
+
 class FlavorTracker implements Comparable<FlavorTracker> {
     public int flavor;
     public LinkedList<Integer> indices;
@@ -67,12 +124,11 @@ class FlavorTracker implements Comparable<FlavorTracker> {
 
 public class arnar_fast_fif_100 {
     public static void main(String[] args) throws Exception {
-        Scanner in = new Scanner(System.in);
-        PrintWriter out = new PrintWriter(System.out, false);
+        Kattio io = new Kattio(System.in, System.out);
 
-        int customerCount = in.nextInt();
-        int flavorCount = in.nextInt();
-        int machineCount = in.nextInt();
+        int customerCount = io.getInt();
+        int flavorCount = io.getInt();
+        int machineCount = io.getInt();
 
         int switches = 0;
         ArrayList<Integer> choices = new ArrayList<Integer>();
@@ -81,7 +137,7 @@ public class arnar_fast_fif_100 {
             trackers.add(new FlavorTracker(i));
         }
         for (int i = 0; i < customerCount; i++) {
-            int choice = in.nextInt()-1;
+            int choice = io.getInt()-1;
             choices.add(choice);
             trackers.get(choice).add(i);
         }
@@ -100,7 +156,7 @@ public class arnar_fast_fif_100 {
             flavors.add(cur);
             switches += change ? 1 : 0;
         }
-        out.println(switches);
-        out.flush(); 
+        io.println(switches);
+        io.flush(); 
     }
 }
