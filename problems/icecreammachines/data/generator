@@ -16,16 +16,16 @@ tc GA-$i random_generator 1 10**6 1 10**6 1 1
 done;
 
 group GB 15
-tc GB-01 random_generator 10**5 10**5 5 5 2 2
+tc GB-01 random_generator 10**4 10**4 5 5 2 2
 for i in {02..05}; do
-tc GB-$i random_generator 1 10**5 1 5 2 2
+tc GB-$i random_generator 1 10**4 1 5 2 2
 done;
 
 group GC 20
 include_group GB
-tc GC-01 random_generator 10**5 10**5 10 10 5 5
+tc GC-01 random_generator 10**4 10**4 10 10 5 5
 for i in {02..05}; do
-tc GC-$i random_generator 1 10**5 1 10 1 5
+tc GC-$i random_generator 1 10**4 1 10 1 5
 done;
 
 group GD 10
@@ -36,9 +36,9 @@ done;
 
 group GE 10
 include_group GD
-tc GE-01 random_generator 1000 1000 100 100 100 100
+tc GE-01 random_generator 2000 2000 100 100 100 100
 for i in {02..10}; do
-tc GE-$i random_generator 1 1000 1 100 1 100
+tc GE-$i random_generator 1 2000 1 100 1 100
 done;
 
 group GF 15
