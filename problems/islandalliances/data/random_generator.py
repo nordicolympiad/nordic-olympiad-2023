@@ -10,8 +10,8 @@ class UnionFind:
         self.adj = [set() for _ in range(n)]
         self.bucket_size = int(n ** 0.5)
         self.bucket_count = (n + self.bucket_size - 1) // self.bucket_size
-        self.roots = [[j for j in range(i * self.bucket_size, min((i+1)*self.bucket_size, n))] for i in range(self.bucket_count)]
-        self.internals = [[] for i in range(self.bucket_count)]
+        #self.roots = [[j for j in range(i * self.bucket_size, min((i+1)*self.bucket_size, n))] for i in range(self.bucket_count)]
+        #self.internals = [[] for i in range(self.bucket_count)]
         self.root_count = n
         self.internal_count = 0
 
@@ -38,10 +38,11 @@ class UnionFind:
         self.adj[y].clear()
 
     def internalize_node(self, y):
-        self.roots[y // self.bucket_size].remove(y)
-        self.root_count -= 1
-        insort(self.internals[y // self.bucket_size], y)
-        self.internal_count += 1
+        pass
+        #self.roots[y // self.bucket_size].remove(y)
+        #self.root_count -= 1
+        #insort(self.internals[y // self.bucket_size], y)
+        #self.internal_count += 1
 
     def unite(self, x, y):
         xp = self.find(x)
@@ -76,6 +77,53 @@ class UnionFind:
                 break
             x -= len(bucket)
         return bucket[x]
+    
+    def is_bad_edge(self, a, b):
+        return a == b or self.distrusts(a, b)
+
+    def get_random_edge(self):
+        a, b = 0, 0
+        while self.is_bad_edge(a, b):
+            a = random.randint(0, self.n-1)
+            b = random.randint(0, self.n-1)
+        return a, b
+
+    def is_bad_query(self, a, b):
+        if gen_type == "one_refuse" and refuses >= 1:
+            return True
+        return uf.united(a, b)
+
+    def get_random_query(self):
+        a, b = 0, 0
+        while self.is_bad_query(a, b):
+            a = random.randint(0, self.n-1)
+            b = random.randint(0, self.n-1)
+        return a, b
+
+    def get_full_adj(self, x):
+        return self.adj[self.find(x)]
+
+    def get_random_accept(self):
+        # TODO: do this better
+        attempts = 0
+        a = 0
+        while True:
+            if attempts > 10:
+                raise ValueError
+            a = random.randint(0, self.n-1)
+            trusted = [i for i in range(self. n) if not uf.united(a, i) and not self.distrusts(a, i)]
+            if len(trusted) > 0:
+                break
+            attempts += 1
+        b = random.choice(trusted)
+        return a, b
+
+    def get_random_refuse(self):
+        a = random.randint(0, self.n-1)
+        while len(self.get_full_adj(a)) == 0:
+            a = random.randint(0, self.n-1)
+        b = random.choice(list(self.get_full_adj(a)))
+        return a, b
 
 
 random.seed(int(sys.argv[-1]))
@@ -86,41 +134,47 @@ min_m = eval(sys.argv[3])
 max_m = eval(sys.argv[4])
 min_q = eval(sys.argv[5])
 max_q = eval(sys.argv[6])
+gen_type = sys.argv[7]
+
+assert gen_type in ["any", "one_refuse"]
 
 n = random.randint(min_n, max_n)
-
 max_m = min(max_m, n*(n-1)//2)
-
 m = random.randint(min_m, max_m)
 q = random.randint(min_q, max_q)
 
 uf = UnionFind(n)
+U = {i for i in range(n)}
 edges = []
+queries = []
+accepts = 0
+refuses = 0
+
 
 for i in range(m):
-    a, b = 0, 0
-    while True:
-        a = random.randint(0, n-1)
-        b = random.randint(0, n-1)
-        if a != b and not uf.distrusts(a, b):
-            break
+    a, b = uf.get_random_edge()
     uf.add_edge(a, b)
     edges.append((a, b))
 
-queries = []
+refuse_index = random.randint(0, q - 1)
 
 for i in range(q):
     if uf.size(0) == n:
         q = len(queries)
         break
-    a, b = 0, 0
-    while uf.united(a, b):
-        a = random.randint(0, n-1)
-        b = random.randint(0, n-1)
+    try:
+        a, b = uf.get_random_query() if gen_type == "any" else (uf.get_random_refuse() if i == refuse_index else uf.get_random_accept())
+    except ValueError:
+        q = len(queries)
+        break
     if not uf.distrusts(a, b):
         uf.unite(a, b)
-
+        accepts += 1
+    else:
+        assert gen_type == "any" or refuse_index == i
+        refuses += 1
     queries.append((a, b))
+
     
 assert m == len(edges)
 assert q == len(queries)
@@ -130,3 +184,5 @@ for a, b in edges:
     sys.stdout.write("{} {}\n".format(a+1, b+1))
 for a, b in queries:
     sys.stdout.write("{} {}\n".format(a+1, b+1))
+
+assert gen_type == "any" or refuses <= 1

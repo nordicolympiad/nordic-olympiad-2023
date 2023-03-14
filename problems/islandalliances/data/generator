@@ -12,20 +12,22 @@ sample 1
 
 group GA 10
 for i in {01..05}; do
-tc GA-$i random_generator 1 500 1 100000 1 100000
+tc GA-$i random_generator 1 500 1 100000 1 100000 any
 done;
 
-group GB 10
+group GB 20
 for i in {01..05}; do
-tc GB-$i random_generator 1 100000 1 500 100000 100000
+tc GB-$i random_generator 1 100000 1 500 100000 100000 any
 done;
 
-#group GC 10
+# TODO: Find fast way of generating this group that is reliable
+group GC 30
+tc GC-01 random_generator 1000 100000 1 990000 1 1000 one_refuse
 #for i in {01..40}; do
-#tc GA-$i random_generator 1 500 1 500 1 500
+#tc GC-$i random_generator 1 100000 1 100000 1 100000 one_refuse
 #done;
 
-group GD 10
+group GD 40
 for i in {01..05}; do
-tc GD-$i random_generator 1 100000 1 100000 1 100000
+tc GD-$i random_generator 1 100000 1 100000 1 100000 any
 done;
