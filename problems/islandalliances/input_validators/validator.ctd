@@ -1,11 +1,19 @@
-INT(1, 8, n)
+INT(1, 100000, n)
+SPACE
+INT(1, 100000, m)
+SPACE
+INT(1, 100000, q)
 NEWLINE
-REP(n, NEWLINE)
-    INT(1, 100, m)
+REP(m, NEWLINE)
+    INT(1, n, u)
     SPACE
-    REP(m, SPACE)
-        INT(1, 50000)
-    END
+    INT(1, n, v)
+END
+NEWLINE
+REP(q, NEWLINE)
+    INT(1, n, a)
+    SPACE
+    INT(1, n, b)
 END
 NEWLINE
 EOF
