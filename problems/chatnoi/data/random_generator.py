@@ -12,6 +12,7 @@ w = eval(sys.argv[5])
 
 tokens = lib.tokens(t)
 data = [ random.choice(tokens) for _ in range(n)  ]
+tokens = list(set(data))
 
 sys.stdout.write("{} {}\n".format(n, k))
 sys.stdout.write("{}\n".format(' '.join(map(str, data))))
