@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 import random
-from bisect import insort
+from bisect import bisect, insort
 
 class UnionFind:
     def __init__(self, n):
@@ -38,11 +38,11 @@ class UnionFind:
         self.adj[y].clear()
 
     def internalize_node(self, y):
-        pass
-        #self.roots[y // self.bucket_size].remove(y)
-        #self.root_count -= 1
-        #insort(self.internals[y // self.bucket_size], y)
-        #self.internal_count += 1
+        return
+        self.roots[y // self.bucket_size].remove(y)
+        self.root_count -= 1
+        insort(self.internals[y // self.bucket_size], y)
+        self.internal_count += 1
 
     def unite(self, x, y):
         xp = self.find(x)
@@ -125,6 +125,17 @@ class UnionFind:
         b = random.choice(list(self.get_full_adj(a)))
         return a, b
 
+def make_tree(edges, vis, ind, l, r):
+    if r <= l:
+        return
+    m = (l+r)//2
+    make_tree(edges, vis, ind, l, m)
+    make_tree(edges, vis, ind, m+1, r)
+    a = ind[random.randint(l, m)]
+    b = ind[random.randint(m+1, r)]
+    edges.append((a, b))
+    assert(a != b)
+    vis.add((min(a,b), max(a,b)))
 
 random.seed(int(sys.argv[-1]))
 
@@ -136,7 +147,7 @@ min_q = eval(sys.argv[5])
 max_q = eval(sys.argv[6])
 gen_type = sys.argv[7]
 
-assert gen_type in ["any", "one_refuse"]
+assert gen_type in ["any", "one_refuse", "cliques"]
 
 n = random.randint(min_n, max_n)
 max_m = min(max_m, n*(n-1)//2)
@@ -150,30 +161,38 @@ queries = []
 accepts = 0
 refuses = 0
 
-
 for i in range(m):
     a, b = uf.get_random_edge()
     uf.add_edge(a, b)
     edges.append((a, b))
 
+random.shuffle(edges)
 refuse_index = random.randint(0, q - 1)
 
-for i in range(q):
-    if uf.size(0) == n:
-        q = len(queries)
-        break
-    try:
-        a, b = uf.get_random_query() if gen_type == "any" else (uf.get_random_refuse() if i == refuse_index else uf.get_random_accept())
-    except ValueError:
-        q = len(queries)
-        break
-    if not uf.distrusts(a, b):
-        uf.unite(a, b)
-        accepts += 1
-    else:
-        assert gen_type == "any" or refuse_index == i
-        refuses += 1
-    queries.append((a, b))
+if gen_type == "any":
+    for i in range(q):
+        if uf.size(0) == n:
+            q = len(queries)
+            break
+        a, b = uf.get_random_query()
+        if not uf.distrusts(a, b):
+            uf.unite(a, b)
+        queries.append((a, b))
+else:
+    tree_edges = []
+    tree_vis = set()
+    ind = [i for i in range(n)]
+    random.shuffle(ind)
+    make_tree(tree_edges, tree_vis, ind, 0, n-1)
+    random.shuffle(tree_edges)
+    for i in range(len(tree_edges)):
+        a, b = tree_edges[i]
+        if not uf.distrusts(a, b):
+            uf.unite(a, b)
+        elif refuses > 0:
+            continue
+        queries.append((a, b))
+    q = len(queries)
 
     
 assert m == len(edges)
@@ -185,4 +204,4 @@ for a, b in edges:
 for a, b in queries:
     sys.stdout.write("{} {}\n".format(a+1, b+1))
 
-assert gen_type == "any" or refuses <= 1
+assert gen_type != "one_refuse" or refuses <= 1

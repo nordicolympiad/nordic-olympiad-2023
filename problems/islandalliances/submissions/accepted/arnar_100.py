@@ -56,4 +56,4 @@ for i in range(q):
         uf.unite(a, b)
         print("APPROVE")
     else:
-        print("REJECT")
+        print("REFUSE")
