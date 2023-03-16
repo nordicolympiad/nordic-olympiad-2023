@@ -177,6 +177,8 @@ if gen_type == "any":
         a, b = uf.get_random_query()
         if not uf.distrusts(a, b):
             uf.unite(a, b)
+        else:
+            refuses += 1
         queries.append((a, b))
 else:
     tree_edges = []
@@ -185,18 +187,20 @@ else:
     random.shuffle(ind)
     make_tree(tree_edges, tree_vis, ind, 0, n-1)
     random.shuffle(tree_edges)
-    for i in range(len(tree_edges)):
-        a, b = tree_edges[i]
+    for i in range(q):
+        a, b = tree_edges[i] if i < len(tree_edges) else uf.get_random_query()
         if not uf.distrusts(a, b):
             uf.unite(a, b)
-        elif refuses > 0:
-            continue
-        queries.append((a, b))
+            queries.append((a, b))
+        elif refuses < 1:
+            queries.append((a, b))
+            refuses += 1
     q = len(queries)
 
     
 assert m == len(edges)
 assert q == len(queries)
+assert gen_type != "one_refuse" or refuses <= 1
 
 sys.stdout.write("{} {} {}\n".format(n, m, q))
 for a, b in edges:
@@ -204,4 +208,3 @@ for a, b in edges:
 for a, b in queries:
     sys.stdout.write("{} {}\n".format(a+1, b+1))
 
-assert gen_type != "one_refuse" or refuses <= 1

@@ -40,17 +40,17 @@ class UnionFind:
     def size(self, x):
         return -self.p[self.find(x)]
 
-n, m, q = map(int, input().split())
+n, m, q = map(int, sys.stdin.readline().split())
 
 uf = UnionFind(n)
 
 for i in range(m):
-    a, b = map(int, input().split())
+    a, b = map(int, sys.stdin.readline().split())
     uf.add_edge(a - 1, b - 1)
 
 
 for i in range(q):
-    a, b = map(int, input().split())
+    a, b = map(int, sys.stdin.readline().split())
     a, b = a - 1, b - 1
     if not uf.distrusts(a, b):
         uf.unite(a, b)

@@ -11,24 +11,32 @@ samplegroup
 sample 1
 
 group GA 10
-for i in {01..05}; do
-tc GA-$i random_generator 1 500 1 200000 1 200000 any
+tc GA-small-01 random_generator 2 10 1 10 1 10 any
+tc GA-small-02 random_generator 2 10 1 10 1 10 any
+tc GA-small-03 random_generator 2 10 1 10 1 10 any
+tc GA-small-04 random_generator 2 10 1 10 1 10 any
+tc GA-small-05 random_generator 2 10 1 10 1 10 any
+tc GA-01 random_generator 500 500 100000 100000 100000 100000 any
+for i in {02..05}; do
+tc GA-$i random_generator 2 500 1 100000 1 100000 any
 done;
 
 group GB 20
-for i in {01..05}; do
-tc GB-$i random_generator 1 200000 1 500 1 200000 any
+tc GB-01 random_generator 200000 200000 100 100 100000 100000 any
+for i in {02..05}; do
+tc GB-$i random_generator 2 200000 1 250 1 100000 any
 done;
 
 group GC 20
-for i in {01..05}; do
-tc GC-$i random_generator 1 5000 1 5000 1 200000 any
+tc GC-01 random_generator 5000 5000 5000 5000 200000 200000 any
+for i in {02..05}; do
+tc GC-$i random_generator 2 5000 1 5000 1 200000 any
 done;
 
-# TODO: Find fast way of generating this group that is reliable
 group GD 20
-for i in {01..05}; do
-tc GD-$i random_generator 1 200000 1 200000 1 200000 one_refuse
+tc GD-01 random_generator 200000 200000 100000 100000 100000 100000 one_refuse
+for i in {02..05}; do
+tc GD-$i random_generator 2 200000 1 100000 1 100000 one_refuse
 done;
 
 group GE 30
@@ -36,6 +44,7 @@ include_group GA
 include_group GB
 include_group GC
 include_group GD
-for i in {01..05}; do
-tc GE-$i random_generator 1 200000 1 200000 1 200000 any
+tc GE-01 random_generator 200000 200000 100000 100000 100000 100000 any
+for i in {02..05}; do
+tc GE-$i random_generator 2 200000 1 100000 1 100000 any
 done;
