@@ -8,12 +8,6 @@ class UnionFind:
         self.n = n
         self.p = [-1 for _ in range(n)]
         self.adj = [set() for _ in range(n)]
-        self.bucket_size = int(n ** 0.5)
-        self.bucket_count = (n + self.bucket_size - 1) // self.bucket_size
-        #self.roots = [[j for j in range(i * self.bucket_size, min((i+1)*self.bucket_size, n))] for i in range(self.bucket_count)]
-        #self.internals = [[] for i in range(self.bucket_count)]
-        self.root_count = n
-        self.internal_count = 0
 
     def find(self, x):
         while self.p[x] >= 0:
@@ -37,13 +31,6 @@ class UnionFind:
             self.adj[x].add(z)
         self.adj[y].clear()
 
-    def internalize_node(self, y):
-        return
-        self.roots[y // self.bucket_size].remove(y)
-        self.root_count -= 1
-        insort(self.internals[y // self.bucket_size], y)
-        self.internal_count += 1
-
     def unite(self, x, y):
         xp = self.find(x)
         yp = self.find(y)
@@ -54,29 +41,12 @@ class UnionFind:
 
         # Merge edges
         self.merge_edges(xp, yp)
-        self.internalize_node(yp)
 
         self.p[xp] += self.p[yp]
         self.p[yp] = xp
 
     def size(self, x):
         return -self.p[self.find(x)]
-
-    def get_random_root(self):
-        x = random.randint(0, self.root_count-1)
-        for bucket in self.roots:
-            if x < len(bucket):
-                break
-            x -= len(bucket)
-        return bucket[x]
-
-    def get_random_internal(self):
-        x = random.randint(0, self.internal_count-1)
-        for bucket in self.internals:
-            if x < len(bucket):
-                break
-            x -= len(bucket)
-        return bucket[x]
     
     def is_bad_edge(self, a, b):
         return a == b or self.distrusts(a, b)
@@ -102,28 +72,6 @@ class UnionFind:
 
     def get_full_adj(self, x):
         return self.adj[self.find(x)]
-
-    def get_random_accept(self):
-        # TODO: do this better
-        attempts = 0
-        a = 0
-        while True:
-            if attempts > 10:
-                raise ValueError
-            a = random.randint(0, self.n-1)
-            trusted = [i for i in range(self. n) if not uf.united(a, i) and not self.distrusts(a, i)]
-            if len(trusted) > 0:
-                break
-            attempts += 1
-        b = random.choice(trusted)
-        return a, b
-
-    def get_random_refuse(self):
-        a = random.randint(0, self.n-1)
-        while len(self.get_full_adj(a)) == 0:
-            a = random.randint(0, self.n-1)
-        b = random.choice(list(self.get_full_adj(a)))
-        return a, b
 
 def make_tree(edges, vis, ind, l, r):
     if r <= l:

@@ -11,11 +11,6 @@ samplegroup
 sample 1
 
 group GA 10
-tc GA-small-01 random_generator 2 10 1 10 1 10 any
-tc GA-small-02 random_generator 2 10 1 10 1 10 any
-tc GA-small-03 random_generator 2 10 1 10 1 10 any
-tc GA-small-04 random_generator 2 10 1 10 1 10 any
-tc GA-small-05 random_generator 2 10 1 10 1 10 any
 tc GA-01 random_generator 500 500 100000 100000 100000 100000 any
 for i in {02..05}; do
 tc GA-$i random_generator 2 500 1 100000 1 100000 any
