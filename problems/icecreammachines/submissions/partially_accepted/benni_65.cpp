@@ -4,8 +4,9 @@ using namespace std;
 /*
  *
  *
- * O(n * n * k)
- * 
+ * O(n * log(n) * k)
+ * Should fit groups 1,2,3,4,5 with 65 points
+ * However it might be possible to squizze it into the 6th group as well
  *
  *
  */
@@ -13,9 +14,14 @@ using namespace std;
 
 int main() {
     int n,k,m;
-    cin >> n >> k >> m;
+    cin >> n >> m >> k;
     vector<int> A(n);
-    for(int i = 0; i < n; i++) cin >> A[i];
+    map<int, set<int>> LL;
+
+    for(int i = 0; i < n; i++) {
+        cin >> A[i];
+        LL[A[i]].insert(i);
+    }
 
     vector<int> Machine(k, -1);
     int ans = 0;
@@ -30,12 +36,11 @@ int main() {
             } else {
                 // what is this?
                 int far = n;
-                for(int z = i + 1; z < n; z++) {
-                    if(Machine[j] == A[z]) {
-                        far = z;
-                        break;
-                    }
+                auto a = LL[Machine[j]].lower_bound(i + 1);
+                if(a != LL[Machine[j]].end()) {
+                    far = *a;
                 }
+
                 if(far > farthest) {
                     farthest = far;
                     bst = j;

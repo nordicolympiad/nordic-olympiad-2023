@@ -12,7 +12,7 @@ typedef pair<int,int> ii;
  */
 
 int n,k,m;
-map<int, set<int>> LL;
+unordered_map<int, set<int>> LL;
 vector<int> A;
 
 int nxt(int at) {
@@ -23,7 +23,8 @@ int nxt(int at) {
 
 
 int main() {
-    cin >> n >> k >> m;
+    cin.sync_with_stdio(false);
+    cin >> n >> m >> k;
     A = vector<int>(n);
 
     for(int i = 0; i < n; i++) {
@@ -31,7 +32,8 @@ int main() {
         LL[A[i]].insert(i);
     }
 
-    map<int,int> NXT;
+    unordered_map<int,int> NXT;
+
     set<ii> pos;
 
     int cnt = 0;

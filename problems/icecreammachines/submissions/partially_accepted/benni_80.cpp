@@ -4,22 +4,29 @@ using namespace std;
 /*
  *
  *
- * O(n * log(n) * k)
- * 
- *
+ * O(n * k + n * m)
+ * Should fit groups 1,2,3,4,5,6 with 80 points
  *
  */
 
 
 int main() {
     int n,k,m;
-    cin >> n >> k >> m;
+    cin >> n >> m >> k;
     vector<int> A(n);
-    map<int, set<int>> LL;
 
     for(int i = 0; i < n; i++) {
         cin >> A[i];
-        LL[A[i]].insert(i);
+    }
+
+    vector<vector<int>> NXT = vector<vector<int>>(n, vector<int>(m+1, 0));
+    vector<int> last(m+1, -1);
+    for(int i = n-1; i >= 0; i--) {
+        for(int j = 0; j <= m; j++) {
+            NXT[i][j] = last[j];
+        }
+
+        last[A[i]] = i;
     }
 
     vector<int> Machine(k, -1);
@@ -35,10 +42,10 @@ int main() {
             } else {
                 // what is this?
                 int far = n;
-                auto a = LL[Machine[j]].lower_bound(i + 1);
-                if(a != LL[Machine[j]].end()) {
-                    far = *a;
+                if(NXT[i][Machine[j]] != -1) {
+                    far = NXT[i][Machine[j]];
                 }
+
 
                 if(far > farthest) {
                     farthest = far;

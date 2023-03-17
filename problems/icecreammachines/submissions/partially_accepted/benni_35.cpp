@@ -4,16 +4,17 @@ using namespace std;
 /*
  *
  * O(n * 2^m * m)
- * Á þetta að fá pass í 3. n <= 10^5, k <= 5, m <= 10?
+ * Ætti að passa 2,3 hóp -> 35 stig
  *
  * 
  */
 
 
 int main() {
-    cin >> n >> k >> m;
-    A  = vector<int>(n, 0);
-    memo = vector<vector<int>>(n+1, vector<int>((1<<m) +1, -1));
+    int n,m,k;
+    cin >> n >> m >> k;
+    vector<int> A  = vector<int>(n, 0);
+    vector<vector<int>>memo = vector<vector<int>>(n+1, vector<int>((1<<m) +1, -1));
     for(int i = 0; i < n; i++) cin >> A[i];
     vector<int> prev((1<<m) + 1, 0);
 
