@@ -7,13 +7,13 @@ assert re.match('^(1|[1-9][0-9]*) (1|[1-9][0-9]*)\n$', line, re.MULTILINE)
 n, k = map(int, line.strip().split())
 assert 1 <= n <= 10**5
 assert 1 <= k <= 10
+assert k < n
 
 line = sys.stdin.readline()
 assert re.match('^[a-z]+( [a-z]+)*\n$', line, re.MULTILINE)
 words = line.strip().split()
 assert len(words) == n
 for word in words:
-  # TODO: Decide max length? (Or total sum of lengths)
   assert 1 <= len(word) <= 10
 
 line = sys.stdin.readline()
