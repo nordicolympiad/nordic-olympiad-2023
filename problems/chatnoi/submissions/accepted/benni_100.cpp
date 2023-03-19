@@ -338,11 +338,10 @@ int main() {
 
     // Let's just assume that everyone has it correct
     for(int i = 0; i < q; i++) {
-        cout << int_ans[i] << endl;
-        /*
-        for(int j = 0; j < w[i]; j++) {
+        // cout << int_ans[i] << endl;
+        for(int j = k; j < w[i]+k; j++) {
             cout << ans[i][j] << " ";
         }
-        cout << endl;*/
+        cout << endl;
     }
 }
