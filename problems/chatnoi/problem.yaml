@@ -3,6 +3,7 @@ source: Nordic Olympiad in Informatics 2023
 rights_owner: Nordic Olympiad in Informatics 2023
 license: cc by-sa
 type: scoring
+validation: custom
 limits:
     time_multiplier: 2
 grading:

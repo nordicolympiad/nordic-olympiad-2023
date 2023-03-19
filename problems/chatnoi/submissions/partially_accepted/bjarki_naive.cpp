@@ -3,6 +3,7 @@ using namespace std;
 
 vector<vector<pair<int,int>>> adj;
 map<pair<int,int>, int> mem;
+map<pair<int,int>, int> nxt;
 
 int dp(int at, int es) {
   if (es == 0) {
@@ -14,7 +15,11 @@ int dp(int at, int es) {
   }
   int mx = 0;
   for(auto it : adj[at]) {
-    mx = max(mx, min(it.second, dp(it.first, es-1)));
+    int cur = min(it.second, dp(it.first, es-1));
+    if (cur > mx) {
+      mx = cur;
+      nxt[state] = it.first;
+    }
   }
   return mem[state] = mx;
 }
@@ -72,10 +77,20 @@ int main() {
       kgram_vec.push_back(word_id[s]);
     }
     if (kgram_id.find(kgram_vec) == kgram_id.end()) {
-      cout << 0 << endl;
+      for (int i = 0; i < w; i++) {
+        cout << id_word[0] << " ";
+      }
+      cout << endl;
     } else {
       int kgram = kgram_id[kgram_vec];
-      cout << dp(kgram, w) << endl;
+      dp(kgram, w);
+      int at = kgram;
+      for (int i = 0; i < w; i++) {
+        int cur = nxt[make_pair(at, w-i)];
+        cout << id_word[*id_kgram[cur].rbegin()] << " ";
+        at = cur;
+      }
+      cout << endl;
     }
   }
   return 0;

@@ -130,7 +130,10 @@ int main() {
       kgram_vec.push_back(word_id[s]);
     }
     if (kgram_id.find(kgram_vec) == kgram_id.end()) {
-      cout << 0 << endl;
+      for (int i = 0; i < w; i++) {
+        cout << id_word[0] << " ";
+      }
+      cout << endl;
     } else {
       int kgram = kgram_id[kgram_vec];
       int lo = 0,
@@ -147,9 +150,18 @@ int main() {
       }
 
       if (res == -1) {
-        cout << 0 << endl;
+        for (int i = 0; i < w; i++) {
+          cout << id_word[0] << " ";
+        }
+        cout << endl;
       } else {
-        cout << weights[res] << endl;
+        int at = kgram;
+        for (int i = 0; i < w; i++) {
+          int cur = next_vertex_by_weight[res][at];
+          cout << id_word[*id_kgram[cur].rbegin()] << " ";
+          at = cur;
+        }
+        cout << endl;
       }
     }
   }
