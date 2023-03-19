@@ -1,49 +1,54 @@
 \problemname{Ice cream machines}
-Arnar, like most other Icelanders, loves ice cream and today is just the perfect
-weather to go grab some of this delicious treat. So he decides to hop out, into
-the blizzard and go grab himself some ice cream.
+Arnar, being a true Icelander, loves ice cream and today is just the perfect
+weather to go grab some of this delicious treat. He heads out into the blizzard
+to his favourite ice cream store. When he arrives he is surprised to see an
+unusually short line ahead of him; he is only the $n$th person waiting to order!
 
-Arnar forgot how late it was, but thankfully made it right before they closed
-for the day. He's startled by the short line, he's only the $N$th person in
-line today!
+Arnar knows this ice cream store well. They offer $m$ different flavours, and
+they have $k$ ice cream machines. However, each machine can only serve one
+flavour at a time, and machines need to be cleaned before they can be loaded
+with a different flavour. Since cleaning a machine takes some time and Arnar is
+in a hurry, he wonders if he can help the store operator determine the optimal
+machine to clean every time a new flavour is needed to serve a customer, in
+order to minimise the total number of times a machine needs to be cleaned.
 
-Since this is Arnar's favourite ice cream store, he knows that they serve $M$
-different flavours and they have $K$ ice cream machines.
-Where each ice cream machine can only serve one flavour at a time and to switch
-flavours the machine needs to be cleaned first.
-Now Arnar wonders what the minimum amount of times, the ice cream machines
-need to be cleaned to serve everyone in the line, including Arnar himself.
+Fortunately, Iceland is a small place and Arnar knows every single person in
+line and the flavour of ice cream they want. The store strictly enforces a
+no-cutting policy, so they will serve customers in the order they arrived. Can
+you help Arnar figure out the minimum number of times the ice cream machines
+need to be cleaned to serve everyone in line, including himself?
 
-Since Iceland is a small place, Arnar knows every person in the line and exactly
-which flavour they will get.
-The store also has a strict no cutting the line policy, and thus will always serve
-the customers in the order in which they queued up.
-
-Can you help Arnar figure out what the minimum amount of times the ice cream
-machines need to be cleaned to server everyone in the line, including Arnar.
-
-You may assume that no customer has been served when Arnar arrives, all the ice
-cream machines are empty, and that they need to be cleaned before their initial use.
+Initially all the ice cream machines are empty and need to be cleaned before
+they are loaded with their first flavour. Once an ice cream machine has been
+loaded with a particular flavour, it can be used to serve any number of
+customers that want that particular flavour, until the machine is cleaned and
+loaded with a different flavour. A machine that is not used at all does not
+need to be cleaned.
 
 \section*{Input}
-The first line of input contains the integers $N$, $M$ and $K$, where $1 \leq
-N, M, K \leq 3 \cdot 10**5$.
-
-The $i$th of the following $N$ lines each contains one integer $c_i$,
-where $1 \leq c_i \leq M$, the flavour that customer $i$ wants.
+The input consists of:
+\begin{itemize}
+  \item One line with three integers $n$, $m$, and $k$, the number of
+    customers waiting in line, the number of available flavours, and the
+    number of ice cream machines.
+  \item $n$ lines, the $i$th of which contains an integer $c_i$, where $1 \leq c_i
+    \leq m$, the flavour that the $i$th customer in line wants.
+\end{itemize}
 
 \section*{Output}
-Print the minimum amount of times the ice cream machines need to be cleaned.
+Output the minimum total number of times the ice cream machines needs to be
+cleaned in order to serve all $n$ customers.
 
 \section*{Scoring}
 \begin{tabular}{|l|l|l|}
     \hline
     Group & Points & Constraints \\ \hline
-    1     &  10  & $N \leq 500$,          $M \leq 10$, $K = 1$ \\ \hline % simulation
-    2     &  15  & $N \leq 500$,          $M \leq 10$, $K \leq 2$ \\ \hline % DP with two machines
-    3     &  20  & $N \leq 500$,          $M \leq 10$, $K \leq 5$ \\ \hline % DP with complex state O(nm m choose k)
-    4     &  10  & $N \leq 1000$,         $M \leq 100$, $K \leq 100$ \\ \hline % O(n**2 * k)
-    5     &  15  & $N \leq 3 \cdot 10^5$, $M \leq 100$, $K \leq 100$ \\ \hline % O(n * k)
-    6     &  30  & $N \leq 3 \cdot 10^5$, $M \leq 3 \cdot 10^5$, $K \leq 3 \cdot 10^5$ \\ \hline % O(n log n)
+    1     &  7   & $N \leq 1000$,          $M \leq 10$, $K = 1$ \\ \hline % simulation O(n) probably
+    2     &  12  & $N \leq 1000$,          $M \leq 10$, $K \leq 2$ \\ \hline % DP with two machines O(n * m**2) probably
+    3     &  22  & $N \leq 1000$,          $M \leq 10$, $K \leq 5$ \\ \hline % DP with complex state O(n * m * (m choose k)) or O(n * m * 2**m)
+    4     &  11  & $N \leq 1000$,         $M \leq 200$, $K \leq 100$ \\ \hline % O(n**2 * k) or O(n * m * k) by pigeonhole principle
+    5     &  14  & $N \leq 2 \cdot 10^5$, $M \leq 200$, $K \leq 100$ \\ \hline % O(n * m + n * k)
+    6     &  13  & $N \leq 2 \cdot 10^5$, $M \leq 2 \cdot 10^5$, $K \leq 100$ \\ \hline % O(n * k)
+    7     &  21  & $N \leq 2 \cdot 10^5$, $M \leq 2 \cdot 10^5$, $K \leq 2 \cdot 10^5$ \\ \hline % O(n log n)
 \end{tabular}
 

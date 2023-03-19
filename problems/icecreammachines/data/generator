@@ -6,52 +6,78 @@ use_solution arnar_fast_fif_100.java
 
 compile random_generator.py
 compile specific_generator.py
+compile slow_index_of_generator.py
 
 samplegroup
 sample 1
+sample 2
 
-group GA 10
-tc GA-01 random_generator 500 500 10 10 1 1
-for i in {02..04}; do
-tc GA-$i random_generator 1 500 1 10 1 1
+group GA 7
+tc GA-01 random_generator 1000 1000 10 10 1 1
+tc GA-02 random_generator 1000 1000 1 1 1 1
+for i in {03..06}; do
+tc GA-$i random_generator 1 1000 1 10 1 1
 done;
+tc GA-spec-01 slow_index_of_generator 1000 10 1
 
-group GB 15
+group GB 12
 include_group GA
-tc GB-01 random_generator 500 500 10 10 2 2
-for i in {02..05}; do
-tc GB-$i random_generator 1 500 1 10 2 2
+tc GB-01 random_generator 1000 1000 10 10 2 2
+tc GB-02 random_generator 1000 1000 2 2 2 2
+for i in {03..06}; do
+tc GB-$i random_generator 1 1000 1 10 2 2
 done;
+tc GB-spec-01 slow_index_of_generator 1000 10 2
 
-group GC 20
+group GC 22
 include_group GB
-tc GC-01 random_generator 500 500 10 10 5 5
-tc GC-spec-01 specific_generator 500 5
-tc GC-spec-02 specific_generator 500 2
-for i in {02..05}; do
-tc GC-$i random_generator 1 500 1 10 1 5
+tc GC-01 random_generator 1000 1000 10 10 5 5
+tc GC-02 random_generator 1000 1000 5 5 5 5
+for i in {03..06}; do
+tc GC-$i random_generator 1 1000 1 10 1 5
 done;
+tc GC-spec-01 specific_generator 1000 5
+tc GC-spec-02 specific_generator 1000 2
+tc GC-spec-03 slow_index_of_generator 1000 10 5
 
-group GD 10
+group GD 11
 include_group GC
-tc GD-01 random_generator 1000 1000 100 100 100 100
-for i in {02..10}; do
-tc GD-$i random_generator 1 1000 1 100 1 100
+tc GD-01 random_generator 1000 1000 200 200 100 100
+tc GD-02 random_generator 1000 1000 100 100 100 100
+for i in {03..10}; do
+tc GD-$i random_generator 1 1000 1 200 1 100
 done;
+tc GD-spec-01 specific_generator 1000 100
+tc GD-spec-02 specific_generator 1000 10
+tc GD-spec-03 slow_index_of_generator 1000 200 100
 
-group GE 15
+group GE 14
 include_group GD
-tc GE-01 random_generator 3*10**5 3*10**5 100 100 100 100
-tc GE-spec-01 specific_generator 3*10**5 100
-tc GE-spec-02 specific_generator 3*10**5 5
-for i in {02..04}; do
-tc GE-$i random_generator 1 3*10**5 1 100 1 100
+tc GE-01 random_generator 2*10**5 2*10**5 200 200 100 100
+tc GE-02 random_generator 2*10**5 2*10**5 100 100 100 100
+for i in {03..05}; do
+tc GE-$i random_generator 1 2*10**5 1 200 1 100
 done;
+tc GE-spec-01 specific_generator 2*10**5 100
+tc GE-spec-02 specific_generator 2*10**5 5
+tc GE-spec-03 slow_index_of_generator 2*10**5 200 100
 
-group GF 30
+group GF 13
 include_group GE
-tc GF-01 random_generator 3*10**5 3*10**5 3*10**5 3*10**5 3*10**5 3*10**5
-tc GF-spec-01 specific_generator 3*10**5 10000
-for i in {02..04}; do
-tc GF-$i random_generator 1 3*10**5 1 3*10**5 1 3*10**5
+tc GF-01 random_generator 2*10**5 2*10**5 2*10**5 2*10**5 100 100
+for i in {02..05}; do
+tc GF-$i random_generator 1 2*10**5 1 2*10**5 1 100
 done;
+tc GF-spec-01 slow_index_of_generator 2*10**5 2*10**5 100
+tc GF-spec-02 slow_index_of_generator 2*10**5 10**4 100
+
+group GG 21
+include_group GF
+tc GG-01 random_generator 2*10**5 2*10**5 2*10**5 2*10**5 2*10**5-1 2*10**5-1
+tc GG-02 random_generator 2*10**5 2*10**5 2*10**5 2*10**5 2*10**5 2*10**5
+for i in {03..05}; do
+tc GG-$i random_generator 1 2*10**5 1 2*10**5 1 2*10**5
+done;
+tc GG-spec-01 specific_generator 2*10**5 10000
+tc GG-spec-02 slow_index_of_generator 2*10**5 2*10**5 10**5
+tc GG-spec-03 slow_index_of_generator 2*10**5 10**4 5000
