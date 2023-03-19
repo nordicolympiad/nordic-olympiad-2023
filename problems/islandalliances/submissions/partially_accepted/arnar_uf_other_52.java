@@ -121,7 +121,7 @@ class UnionFind {
     } 
 }
 
-public class arnar_uf {
+public class arnar_uf_other_52 {
   public static void main(String[] args) throws Exception {
     Kattio io = new Kattio(System.in, System.out);
     
@@ -140,7 +140,7 @@ public class arnar_uf {
     for(int query = 0; query < q; query++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
-        if(uf.distrusts(a, b)) {
+        if(uf.distrusts(b, a)) {
             io.println("REFUSE");
         }
         else {

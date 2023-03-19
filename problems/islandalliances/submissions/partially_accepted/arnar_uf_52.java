@@ -61,16 +61,38 @@ class Kattio extends PrintWriter {
 
 class UnionFind {
     ArrayList<Integer> p;
+    ArrayList<HashSet<Integer>> adj;
     int n;
     public UnionFind(int n) {
         this.n = n;
         p = new ArrayList<Integer>();
+        adj = new ArrayList<HashSet<Integer>>();
         for (int i = 0; i < n; i++) {
             p.add(-1);
+            adj.add(new HashSet<Integer>());
         }
     }
 
-    private int find(int x) {
+    public void addEdge(int x, int y) {
+        adj.get(x).add(y);
+        adj.get(y).add(x);
+    }
+
+    public boolean distrusts(int x, int y) {
+        return adj.get(find(x)).contains(find(y));
+    }
+
+    private void mergeAdj(int x, int y) {
+        HashSet<Integer> xSet = adj.get(x), ySet = adj.get(y);
+        for (int z : ySet) {
+            adj.get(z).remove(y);
+            adj.get(z).add(x);
+            xSet.add(z);
+        }
+        ySet.clear();
+    }
+
+    public int find(int x) {
         if (p.get(x) < 0) {
             return x;
         }
@@ -84,11 +106,7 @@ class UnionFind {
         if (xp == yp) {
             return false;
         }
-        if (p.get(xp) > p.get(yp)) {
-            int tmp = yp;
-            yp = xp;
-            xp = tmp;
-        }
+        mergeAdj(xp, yp);
         p.set(xp, p.get(xp) + p.get(yp));
         p.set(yp, xp);
         return true; 
@@ -103,24 +121,7 @@ class UnionFind {
     } 
 }
 
-class Edge implements Comparable<Edge> {
-    int u, v;
-    public Edge(int u, int v) {
-        this.u = u;
-        this.v = v;
-    }
-    @Override
-    public int compareTo(Edge other) {
-        int res = Integer.compare(u, other.u);
-        if(res == 0) {
-            return Integer.compare(v, other.v);
-        }
-        return res;
-    }
-}
-
-
-public class arnar_few_edges {
+public class arnar_uf_52 {
   public static void main(String[] args) throws Exception {
     Kattio io = new Kattio(System.in, System.out);
     
@@ -129,25 +130,17 @@ public class arnar_few_edges {
     int q = io.getInt();
 
     UnionFind uf = new UnionFind(n);
-    ArrayList<Edge> edges = new ArrayList<Edge>();
 
     for(int i = 0; i < m; i++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
-        edges.add(new Edge(a, b));
-        edges.add(new Edge(b, a));
+        uf.addEdge(a, b);
     }
 
     for(int query = 0; query < q; query++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
-        boolean ok = true;
-        for (Edge e : edges) {
-            if (uf.united(e.u, a) && uf.united(e.v, b)) {
-                ok = false;
-            }
-        }
-        if(!ok) {
+        if(uf.distrusts(a, b)) {
             io.println("REFUSE");
         }
         else {

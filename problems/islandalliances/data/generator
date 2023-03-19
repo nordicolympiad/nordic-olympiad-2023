@@ -20,7 +20,7 @@ compile random_generator.py
 samplegroup
 sample 1
 
-group GA 10
+group GA 15
 tc GA-01 random_generator $SMALLN $SMALLN $MAXM $MAXM $MAXQ $MAXQ $MAXQ any
 tc GA-02 random_generator $SMALLN $SMALLN $MAXM $MAXM $MAXQ $MAXQ $MAXQ move_much_left
 tc GA-03 random_generator $SMALLN $SMALLN $MAXM $MAXM $MAXQ $MAXQ $MAXQ move_much_right
@@ -28,12 +28,12 @@ for i in {04..06}; do
 tc GA-$i random_generator 2 $SMALLN 1 $MAXQ 1 $MAXQ $MAXQ any
 done;
 
-group GB 20
+group GB 17
 tc GB-01 random_generator $MAXN $MAXN $SMALLM $SMALLM $MAXQ $MAXQ $MAXQ any
 tc GB-02 random_generator $MAXN $MAXN $SMALLM $SMALLM $MAXQ $MAXQ $MAXQ move_much_left
 tc GB-03 random_generator $MAXN $MAXN $SMALLM $SMALLM $MAXQ $MAXQ $MAXQ move_much_right
 for i in {04..06}; do
-tc GB-$i random_generator 2 $MAXN 1 $SMALLN 1 $MAXQ $MAXQ any
+tc GB-$i random_generator 2 $MAXN 1 $SMALLM 1 $MAXQ $MAXQ any
 done;
 
 group GC 20
@@ -44,7 +44,7 @@ for i in {04..06}; do
 tc GC-$i random_generator 2 $MEDN 1 $MEDN 1 $MAXQ $MAXQ any
 done;
 
-group GD 20
+group GD 23
 tc GD-01 random_generator $MAXN $MAXN $MAXM $MAXM $MAXQ $MAXQ 1 any
 tc GD-02 random_generator $MAXN $MAXN $MAXM $MAXM $MAXQ $MAXQ 1 move_much_left
 tc GD-03 random_generator $MAXN $MAXN $MAXM $MAXM $MAXQ $MAXQ 1 move_much_right
@@ -52,7 +52,7 @@ for i in {04..06}; do
 tc GD-$i random_generator 2 $MAXN 1 $MAXM 1 $MAXQ 1 any
 done;
 
-group GE 30
+group GE 25
 include_group GA
 include_group GB
 include_group GC

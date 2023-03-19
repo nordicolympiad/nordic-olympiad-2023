@@ -46,13 +46,15 @@ int main() {
         u = un.find(u);
         v = un.find(v);
         assert(v != u);
+        if(E[u].size() > E[v].size()) {
+            swap(u, v);
+        }
 
         if(E[u].find(v) == E[u].end()) {
             un.unite(u,v);
             int w = un.find(v);
             for(auto l : E[u]) {
                 E[w].insert(l);
-                E[l].insert(w);
             }
             cout << "APPROVE" <<  endl;
         } else {

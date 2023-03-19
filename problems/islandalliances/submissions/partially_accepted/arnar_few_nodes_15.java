@@ -59,7 +59,7 @@ class Kattio extends PrintWriter {
     }
 }
 
-public class arnar_few_nodes {
+public class arnar_few_nodes_15 {
   public static void main(String[] args) throws Exception {
     Kattio io = new Kattio(System.in, System.out);
     

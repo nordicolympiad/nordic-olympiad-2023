@@ -61,35 +61,13 @@ class Kattio extends PrintWriter {
 
 class UnionFind {
     ArrayList<Integer> p;
-    ArrayList<HashSet<Integer>> adj;
     int n;
     public UnionFind(int n) {
         this.n = n;
         p = new ArrayList<Integer>();
-        adj = new ArrayList<HashSet<Integer>>();
         for (int i = 0; i < n; i++) {
             p.add(-1);
-            adj.add(new HashSet<Integer>());
         }
-    }
-
-    public void addEdge(int x, int y) {
-        adj.get(x).add(y);
-        adj.get(y).add(x);
-    }
-
-    public boolean distrusts(int x, int y) {
-        return adj.get(find(x)).contains(find(y));
-    }
-
-    private void mergeAdj(int x, int y) {
-        HashSet<Integer> xSet = adj.get(x), ySet = adj.get(y);
-        for (int z : ySet) {
-            adj.get(z).remove(y);
-            adj.get(z).add(x);
-            xSet.add(z);
-        }
-        ySet.clear();
     }
 
     public int find(int x) {
@@ -106,12 +84,6 @@ class UnionFind {
         if (xp == yp) {
             return false;
         }
-        if (p.get(xp) > p.get(yp)) {
-            int tmp = yp;
-            yp = xp;
-            xp = tmp;
-        }
-        mergeAdj(xp, yp);
         p.set(xp, p.get(xp) + p.get(yp));
         p.set(yp, xp);
         return true; 
@@ -126,7 +98,15 @@ class UnionFind {
     } 
 }
 
-public class arnar_100 {
+class Edge {
+    public int u, v;
+    public Edge(int _u, int _v) {
+        u = _u;
+        v = _v;
+    }
+}
+
+public class arnar_bs_23 {
   public static void main(String[] args) throws Exception {
     Kattio io = new Kattio(System.in, System.out);
     
@@ -134,25 +114,57 @@ public class arnar_100 {
     int m = io.getInt();
     int q = io.getInt();
 
-    UnionFind uf = new UnionFind(n);
+    ArrayList<Edge> edges = new ArrayList<Edge>();
+    ArrayList<Edge> queries = new ArrayList<Edge>();
 
     for(int i = 0; i < m; i++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
-        uf.addEdge(a, b);
+        edges.add(new Edge(a, b));
     }
 
     for(int query = 0; query < q; query++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
-        if(uf.distrusts(a, b)) {
-            io.println("ReFuSe");
+        queries.add(new Edge(a, b));
+    }
+
+    int lo = 0, hi = q;
+    int best = 0;
+    while (lo <= hi) {
+        int mid = (lo + hi)/2;
+        UnionFind uf = new UnionFind(n);
+        for (int i = 0; i < mid; i++) {
+            Edge query = queries.get(i);
+            uf.unite(query.u, query.v);
+        }
+        boolean distrust = false;
+        for (Edge e : edges) {
+            distrust |= uf.united(e.u, e.v);
+        }
+        if (distrust) {
+            hi = mid - 1;
         }
         else {
-            io.println("aPpRoVe");
-            uf.unite(a, b);
+            best = mid;
+            lo = mid + 1;
         }
     }
+
+
+    for(int i = 0; i < best; i++) {
+        io.println("APPROVE");
+    }
+    q -= best;
+    if (q > 0) {
+        io.println("REFUSE");
+        q--;
+
+    }
+    for(int i = 0; i < q; i++) {
+        io.println("APPROVE");
+    }
+
     io.flush(); 
   }
 }

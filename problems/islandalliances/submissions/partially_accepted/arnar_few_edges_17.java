@@ -70,7 +70,7 @@ class UnionFind {
         }
     }
 
-    public int find(int x) {
+    private int find(int x) {
         if (p.get(x) < 0) {
             return x;
         }
@@ -83,6 +83,11 @@ class UnionFind {
         int yp = find(y);
         if (xp == yp) {
             return false;
+        }
+        if (p.get(xp) > p.get(yp)) {
+            int tmp = yp;
+            yp = xp;
+            xp = tmp;
         }
         p.set(xp, p.get(xp) + p.get(yp));
         p.set(yp, xp);
@@ -98,15 +103,24 @@ class UnionFind {
     } 
 }
 
-class Edge {
-    public int u, v;
-    public Edge(int _u, int _v) {
-        u = _u;
-        v = _v;
+class Edge implements Comparable<Edge> {
+    int u, v;
+    public Edge(int u, int v) {
+        this.u = u;
+        this.v = v;
+    }
+    @Override
+    public int compareTo(Edge other) {
+        int res = Integer.compare(u, other.u);
+        if(res == 0) {
+            return Integer.compare(v, other.v);
+        }
+        return res;
     }
 }
 
-public class arnar_bs {
+
+public class arnar_few_edges_17 {
   public static void main(String[] args) throws Exception {
     Kattio io = new Kattio(System.in, System.out);
     
@@ -114,57 +128,33 @@ public class arnar_bs {
     int m = io.getInt();
     int q = io.getInt();
 
+    UnionFind uf = new UnionFind(n);
     ArrayList<Edge> edges = new ArrayList<Edge>();
-    ArrayList<Edge> queries = new ArrayList<Edge>();
 
     for(int i = 0; i < m; i++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
         edges.add(new Edge(a, b));
+        edges.add(new Edge(b, a));
     }
 
     for(int query = 0; query < q; query++) {
         int a = io.getInt() - 1;
         int b = io.getInt() - 1;
-        queries.add(new Edge(a, b));
-    }
-
-    int lo = 0, hi = q;
-    int best = 0;
-    while (lo <= hi) {
-        int mid = (lo + hi)/2;
-        UnionFind uf = new UnionFind(n);
-        for (int i = 0; i < mid; i++) {
-            Edge query = queries.get(i);
-            uf.unite(query.u, query.v);
-        }
-        boolean distrust = false;
+        boolean ok = true;
         for (Edge e : edges) {
-            distrust |= uf.united(e.u, e.v);
+            if (uf.united(e.u, a) && uf.united(e.v, b)) {
+                ok = false;
+            }
         }
-        if (distrust) {
-            hi = mid - 1;
+        if(!ok) {
+            io.println("REFUSE");
         }
         else {
-            best = mid;
-            lo = mid + 1;
+            io.println("APPROVE");
+            uf.unite(a, b);
         }
     }
-
-
-    for(int i = 0; i < best; i++) {
-        io.println("APPROVE");
-    }
-    q -= best;
-    if (q > 0) {
-        io.println("REFUSE");
-        q--;
-
-    }
-    for(int i = 0; i < q; i++) {
-        io.println("APPROVE");
-    }
-
     io.flush(); 
   }
 }

@@ -21,15 +21,14 @@ which should be approved!
 \section*{Input}
 The input consists of:
 \begin{itemize}
-  \item One line with three integers $n$, $m$, and $q$ ($1 \leq n,m,q \leq
-        200\,000$), the number of islands, the number of distrusting pairs of
+  \item One line with three integers $n$, $m$, and $q$, the number of islands, the number of distrusting pairs of
         islands, and the number of proposals.
-  \item $m$ lines, the $i$th of which contains two integers $u_i$ and $v_i$ ($1
-        \leq u_i,v_i \leq n$, $u_i \neq v_i$), meaning that the inhabitants of
+  \item $m$ lines, the $i$th of which contains two integers $u_i$ and $v_i$, where $1
+        \leq u_i,v_i \leq n$, $u_i \neq v_i$, meaning that the inhabitants of
         islands $u_i$ and $v_i$ distrust each other. Each pair $(u_i, v_i)$ will be
         listed at most once.
-  \item $q$ lines, the $i$th of which contains two integers $a_i$ and $b_i$ ($1
-        \leq a_i,b_i \leq n$) describing the $i$th proposal. It is guaranteed
+  \item $q$ lines, the $i$th of which contains two integers $a_i$ and $b_i$, where $1
+        \leq a_i,b_i \leq n$, describing the $i$th proposal. It is guaranteed
         that no proposal will ever call for a state to merge with itself, meaning
         that at the time when you receive the $i$th proposal, $a_i$ and $b_i$ are
         guaranteed to belong to different states.
@@ -41,11 +40,13 @@ proposal should be refused, or ``\texttt{APPROVE}'' if the $i$th proposal should
 be approved.
 
 \section*{Scoring}
-% TODO
-\begin{itemize}
-    \item $\mathbf{n} \mathbf{\leq} \mathbf{500}$.
-    \item $\mathbf{n} \mathbf{\leq} \mathbf{500}$.
-    \item $\mathbf{m} \mathbf{\leq} \mathbf{500}$.
-    \item \textbf{It is guaranteed that at most one of the proposals should be
-    rejected}.
-\end{itemize}
+\begin{tabular}{|l|l|l|}
+    \hline
+    Group & Points & Constraints \\ \hline
+    1     &  15  & $2 \leq N \leq 500$,    $1 \leq M \leq 10^5$,   $1 \leq Q \leq 10^5$ \\ \hline % adjacency matrix O(n^3)
+    2     &  17  & $2 \leq N \leq 10^5$,   $1 \leq M \leq 250$,    $1 \leq Q \leq 10^5$ \\ \hline % union find with global edge list O(mq)
+    3     &  20  & $2 \leq N \leq 5\,000$, $1 \leq M \leq 5\,000$, $1 \leq Q \leq 10^5$ \\ \hline % union find tracking edge sets O(nm)
+    4     &  23  & $2 \leq N \leq 10^5$,   $1 \leq M \leq 10^5$,   $1 \leq Q \leq 10^5$, maximum of one ``\texttt{REFUSE}`` \\ \hline   % binary search
+    5     &  25  & $2 \leq N \leq 10^5$,   $1 \leq M \leq 10^5$,   $1 \leq Q \leq 10^5$ \\ \hline %  O(n log m)
+\end{tabular}
+
