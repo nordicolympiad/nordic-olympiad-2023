@@ -27,7 +27,7 @@ cream machines are empty, and that they need to be cleaned before their initial 
 
 \section*{Input}
 The first line of input contains the integers $N$, $M$ and $K$, where $1 \leq
-N, M, K \leq 10^6$.
+N, M, K \leq 3 \cdot 10**5$.
 
 The $i$th of the following $N$ lines each contains one integer $c_i$,
 where $1 \leq c_i \leq M$, the flavour that customer $i$ wants.
@@ -39,12 +39,11 @@ Print the minimum amount of times the ice cream machines need to be cleaned.
 \begin{tabular}{|l|l|l|}
     \hline
     Group & Points & Constraints \\ \hline
-    1     &  10  & $N \leq 500$,          $M \leq 500$, $K = 1$ \\ \hline
-    2     &  15  & $N \leq 500$,          $M \leq 10$, $K = 2$ \\ \hline
-    3     &  20  & $N \leq 500$,          $M \leq 10$, $K \leq 5$ \\ \hline
-    4     &  10  & $N \leq 500$,          $M \leq 50$, $K \leq 50$ \\ \hline
-    5     &  10  & $N \leq 2000$,         $M \leq 100$, $K \leq 100$ \\ \hline
-    6     &  15  & $N \leq 3 \cdot 10^5$, $M \leq 100$, $K \leq 100$ \\ \hline
-    7     &  20  & $N \leq 3 \cdot 10^5$, $M \leq 3 \cdot 10^5$, $K \leq 3 \cdot 10^5$ \\ \hline
+    1     &  10  & $N \leq 500$,          $M \leq 10$, $K = 1$ \\ \hline % simulation
+    2     &  15  & $N \leq 500$,          $M \leq 10$, $K \leq 2$ \\ \hline % DP with two machines
+    3     &  20  & $N \leq 500$,          $M \leq 10$, $K \leq 5$ \\ \hline % DP with complex state O(nm m choose k)
+    4     &  10  & $N \leq 1000$,         $M \leq 100$, $K \leq 100$ \\ \hline % O(n**2 * k)
+    5     &  15  & $N \leq 3 \cdot 10^5$, $M \leq 100$, $K \leq 100$ \\ \hline % O(n * k)
+    6     &  30  & $N \leq 3 \cdot 10^5$, $M \leq 3 \cdot 10^5$, $K \leq 3 \cdot 10^5$ \\ \hline % O(n log n)
 \end{tabular}
 
