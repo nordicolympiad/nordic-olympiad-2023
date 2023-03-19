@@ -122,7 +122,7 @@ class FlavorTracker implements Comparable<FlavorTracker> {
 
 }
 
-public class arnar_fif {
+public class arnar_fif_80 {
     public static void main(String[] args) throws Exception {
         Kattio io = new Kattio(System.in, System.out);
 

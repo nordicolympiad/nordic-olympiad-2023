@@ -91,7 +91,7 @@ class Kattio extends PrintWriter {
     }
 }
 
-public class arnar_five_machines {
+public class arnar_five_machines_35 {
     static int customerCount = 0, flavorCount = 0, machineCount = 0;
     static HashMap<State, Integer> mem;
     static ArrayList<Integer> choices;

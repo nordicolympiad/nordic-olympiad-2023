@@ -43,7 +43,7 @@ class State {
 }
 
 
-public class arnar_two_machines {
+public class arnar_two_machines_15 {
     static int customerCount = 0, flavorCount = 0, machineCount = 0;
     static HashMap<State, Integer> mem;
     static ArrayList<Integer> choices;
