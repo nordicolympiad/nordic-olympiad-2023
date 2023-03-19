@@ -22,10 +22,11 @@ struct union_find {
 };
 
 int main() {
+    cin.sync_with_stdio(false);
     int n,m,q;
     cin >> n >> m >> q;
 
-    vector<set<int>> E = vector<set<int>>(n, set<int>());
+    vector<unordered_set<int>> E = vector<unordered_set<int>>(n, unordered_set<int>());
 
     union_find un(n);
 
@@ -33,8 +34,8 @@ int main() {
         int u,v;
         cin >> u >> v;
         u--;v--;
-        E[u].push_back(v);
-        E[v].push_back(u);
+        E[u].insert(v);
+        E[v].insert(u);
     }
 
     for(int i = 0; i < q; i++) {
@@ -44,6 +45,7 @@ int main() {
 
         u = un.find(u);
         v = un.find(v);
+        assert(v != u);
         if(E[u].size() > E[v].size()) {
             swap(u, v);
         }
@@ -53,9 +55,11 @@ int main() {
             int w = un.find(v);
             for(auto l : E[u]) {
                 E[w].insert(l);
+                E[l].insert(w);
             }
+            cout << "APPROVE" <<  endl;
         } else {
-            cout << "Refuse" << endl;
+            cout << "REFUSE" << endl;
         }
 
     }
