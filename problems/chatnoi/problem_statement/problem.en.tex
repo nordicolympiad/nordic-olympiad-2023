@@ -81,7 +81,7 @@ possible solutions for a given query then you may output any one of them.
     Group & Points & Constraints \\ \hline
     1     & 5      & $k < n \leq 100$,           $k = 1$,            $1 \leq q \leq 100$,  $m_i = 1$ \\ \hline % frequency table lookup: O(n*k + q*k)
     2     & 7      & $k < n \leq 5 \cdot 10^5$,  $1 \leq k \leq 10$, $1 \leq q \leq 10^5$, $m_i = 1$ \\ \hline % frequency table lookup: O(n*k + q*k)
-    3     & 17     & $k < n \leq 7$,             $1 \leq k \leq 10$, $1 \leq q \leq 10$,   $1 \leq m_i \leq 7$  \\ \hline %
+    3     & 17     & $k < n \leq 6$,             $1 \leq k \leq 10$, $1 \leq q \leq 10$,   $1 \leq m_i \leq 6$  \\ \hline %
     4     & 18     & $k < n \leq 5\,000$,        $1 \leq k \leq 10$, $1 \leq q \leq 10^5$, $q \leq M \leq 5\,000$ \\ \hline % DP(vertex, path length): O(n*k + n*M)
     5     & 24     & $k < n \leq 5 \cdot 10^5$,  $1 \leq k \leq 10$, $1 \leq q \leq 10$,   $q \leq M \leq 5 \cdot 10^5$ \\ \hline % Binary search + SCC + DP longest path: O(n*k + q * log(n) + M)
     6     & 16     & $k < n \leq 10^5$,          $1 \leq k \leq 10$, $1 \leq q \leq 10^5$, $q \leq M \leq 5 \cdot 10^5$ \\ \hline % SCC + DP longest path for each distinct edge weight: O(n*k + n*sqrt(n) + M)
