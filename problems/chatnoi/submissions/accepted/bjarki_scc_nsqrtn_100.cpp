@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int VERTICES = 100000 * 10 + 100;
+const int VERTICES = 500000 + 100;
 const int INF = 1000000000;
 
 vector<vector<pair<int,int>>> adj;
