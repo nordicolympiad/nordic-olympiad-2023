@@ -10,6 +10,8 @@ compile path_many_weights.py
 
 samplegroup
 sample 1
+sample 2
+sample 3
 
 # m_i = 1, k = 1
 group GA 5
