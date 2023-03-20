@@ -34,7 +34,7 @@ include_group GB
 tc GC-01 random_generator 1000 1000 10 10 5 5
 tc GC-02 random_generator 1000 1000 5 5 5 5
 for i in {03..06}; do
-tc GC-$i random_generator 1 1000 1 10 1 5
+tc GC-$i random_generator 1 1000 1 10 3 5
 done;
 tc GC-spec-01 specific_generator 1000 5
 tc GC-spec-02 specific_generator 1000 2
