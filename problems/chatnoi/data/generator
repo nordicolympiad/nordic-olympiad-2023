@@ -7,6 +7,8 @@ use_solution bjarki_scc_nlogn_100.cpp
 compile random_generator.py
 compile shakespeare.py
 compile path_many_weights.py
+compile star.py
+compile loop.py
 
 samplegroup
 sample 1
@@ -103,7 +105,6 @@ tc GE-11 random_generator 413678 10 10 9 372658 5*10**5
 # SCC + Longest path for each unique weight O(n * sqrt(n))
 group GF 16
 include_group GD
-include_group GE
 tc GF-01 random_generator 100000 10 1 100000 500000 5*10**5
 tc GF-02 random_generator 100000 10 2 100000 500000 5*10**5
 tc GF-03 random_generator 100000 10 3 100000 500000 5*10**5
@@ -119,6 +120,7 @@ tc GF-11 random_generator 93678 10 10 43762 392658 5*10**5
 # SCC + Longest path for each unique weight with clever observation O(n * log(n))
 group GG 13
 include_group GB
+include_group GE
 include_group GF
 tc GG-01 random_generator 500000 100000 1 1 100000 5*10**5
 tc GG-03 random_generator 500000 100000 1 4 100000 5*10**5
@@ -154,3 +156,41 @@ tc GG-113 path_many_weights 500000 left 10000 100000 uniform
 tc GG-114 path_many_weights 500000 right 10000 100000 uniform
 tc GG-115 path_many_weights 500000 left 100000 100000 even
 tc GG-116 path_many_weights 500000 right 100000 100000 even
+
+#tc GB-103 path_many_weights 500000 left 100 100000 even
+#tc GB-104 path_many_weights 500000 right 100 100000 even
+#tc GB-105 path_many_weights 500000 left 100 100000 uniform
+#tc GB-106 path_many_weights 500000 right 100 100000 uniform
+#tc GB-107 path_many_weights 500000 left 1000 100000 even
+#tc GB-108 path_many_weights 500000 right 1000 100000 even
+#tc GB-109 path_many_weights 500000 left 1000 100000 uniform
+#tc GB-110 path_many_weights 500000 right 1000 100000 uniform
+#tc GB-111 path_many_weights 500000 left 10000 100000 even
+#tc GB-112 path_many_weights 500000 right 10000 100000 even
+#tc GB-113 path_many_weights 500000 left 10000 100000 uniform
+#tc GB-114 path_many_weights 500000 right 10000 100000 uniform
+#tc GB-115 path_many_weights 500000 left 100000 100000 even
+#tc GB-116 path_many_weights 500000 right 100000 100000 even
+
+# tc GB-117 star 500000 2 2 100000 500000
+# tc GB-118 star 500000 4 4 100000 500000
+# tc GB-119 star 500000 7 7 100000 500000
+# tc GB-120 star 500000 13 13 100000 500000
+# tc GB-121 star 500000 17 4 100000 500000
+# tc GB-122 star 500000 32 5 100000 500000
+# tc GB-123 star 500000 50 4 100000 500000
+# tc GB-124 star 500000 80 8 100000 500000
+# tc GB-125 star 500000 4 17 100000 500000
+# tc GB-126 star 500000 5 32 100000 500000
+# tc GB-127 star 500000 4 50 100000 500000
+# tc GB-128 star 500000 8 80 100000 500000
+
+# tc GB-129 loop 500000 1 1 100000 500000
+# tc GB-130 loop 500000 2 1 100000 500000
+# tc GB-131 loop 500000 3 1 100000 500000
+# tc GB-132 loop 500000 10 1 100000 500000
+# tc GB-133 loop 500000 1 10 100000 500000
+# tc GB-134 loop 500000 2 10 100000 500000
+# tc GB-135 loop 500000 3 10 100000 500000
+# tc GB-136 loop 500000 10 10 100000 500000
+
