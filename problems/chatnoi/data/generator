@@ -2,9 +2,11 @@
 PPATH=$(realpath ..)
 . ../../../testdata_tools/gen.sh
 
-use_solution benni_100.cpp
+use_solution bjarki_scc_nlogn_100.cpp
 
 compile random_generator.py
+compile shakespeare.py
+compile path_many_weights.py
 
 samplegroup
 sample 1
@@ -34,77 +36,128 @@ tc GA-18 random_generator 1000 100 3 100 10000
 tc GA-19 random_generator 1000 100 4 100 10000
 tc GA-20 random_generator 1000 100 5 100 10000
 
-# group GB 10
-# tc GB-01 random_generator 100000 100000 1 1 100000
-# tc GB-02 random_generator 100000 100000 1 2 100000
-# tc GB-03 random_generator 100000 100000 1 4 100000
-# tc GB-04 random_generator 100000 100000 1 5 100000
-# tc GB-05 random_generator 100000 100000 1 10 100000
-# tc GB-06 random_generator 100000 100000 1 100 100000
-# tc GB-07 random_generator 100000 10000 1 1 100000
-# tc GB-08 random_generator 100000 10000 1 2 100000
-# tc GB-09 random_generator 100000 10000 1 4 100000
-# tc GB-10 random_generator 100000 10000 1 5 100000
-# tc GB-11 random_generator 100000 10000 1 10 100000
-# tc GB-12 random_generator 100000 10000 1 100 100000
-# tc GB-13 random_generator 100000 1000 1 1 100000
-# tc GB-14 random_generator 100000 1000 1 2 100000
-# tc GB-15 random_generator 100000 1000 1 4 100000
-# tc GB-16 random_generator 100000 1000 1 5 100000
-# tc GB-17 random_generator 100000 1000 1 10 100000
-# tc GB-18 random_generator 100000 1000 1 100 100000
-# tc GB-19 random_generator 100000 100 1 1 100000
-# tc GB-20 random_generator 100000 100 1 2 100000
-# tc GB-21 random_generator 100000 100 1 4 100000
-# tc GB-22 random_generator 100000 100 1 5 100000
-# tc GB-23 random_generator 100000 100 1 10 100000
-# tc GB-24 random_generator 100000 100 1 100 100000
-# tc GB-25 random_generator 100000 100000 2 1 100000
-# tc GB-26 random_generator 100000 100000 2 2 100000
-# tc GB-27 random_generator 100000 100000 2 4 100000
-# tc GB-28 random_generator 100000 100000 2 5 100000
-# tc GB-29 random_generator 100000 100000 2 10 100000
-# tc GB-30 random_generator 100000 100000 2 100 100000
-# tc GB-31 random_generator 100000 10000 2 1 100000
-# tc GB-32 random_generator 100000 10000 2 2 100000
-# tc GB-33 random_generator 100000 10000 2 4 100000
-# tc GB-34 random_generator 100000 10000 2 5 100000
-# tc GB-35 random_generator 100000 10000 2 10 100000
-# tc GB-36 random_generator 100000 10000 2 100 100000
-# tc GB-37 random_generator 100000 1000 2 1 100000
-# tc GB-38 random_generator 100000 1000 2 2 100000
-# tc GB-39 random_generator 100000 1000 2 4 100000
-# tc GB-40 random_generator 100000 1000 2 5 100000
-# tc GB-41 random_generator 100000 1000 2 10 100000
-# tc GB-42 random_generator 100000 1000 2 100 100000
-# tc GB-43 random_generator 100000 100 2 1 100000
-# tc GB-44 random_generator 100000 100 2 2 100000
-# tc GB-45 random_generator 100000 100 2 4 100000
-# tc GB-46 random_generator 100000 100 2 5 100000
-# tc GB-47 random_generator 100000 100 2 10 100000
-# tc GB-48 random_generator 100000 100 2 100 100000
-# tc GB-49 random_generator 100000 100000 3 1 100000
-# tc GB-50 random_generator 100000 100000 3 2 100000
-# tc GB-51 random_generator 100000 100000 3 4 100000
-# tc GB-52 random_generator 100000 100000 3 5 100000
-# tc GB-53 random_generator 100000 100000 3 10 100000
-# tc GB-54 random_generator 100000 100000 3 100 100000
-# tc GB-55 random_generator 100000 10000 3 1 100000
-# tc GB-56 random_generator 100000 10000 3 2 100000
-# tc GB-57 random_generator 100000 10000 3 4 100000
-# tc GB-58 random_generator 100000 10000 3 5 100000
-# tc GB-59 random_generator 100000 10000 3 10 100000
-# tc GB-60 random_generator 100000 10000 3 100 100000
-# tc GB-61 random_generator 100000 1000 3 1 100000
-# tc GB-62 random_generator 100000 1000 3 2 100000
-# tc GB-63 random_generator 100000 1000 3 4 100000
-# tc GB-64 random_generator 100000 1000 3 5 100000
-# tc GB-65 random_generator 100000 1000 3 10 100000
-# tc GB-66 random_generator 100000 1000 3 100 100000
-# tc GB-67 random_generator 100000 100 3 1 100000
-# tc GB-68 random_generator 100000 100 3 2 100000
-# tc GB-69 random_generator 100000 100 3 4 100000
-# tc GB-70 random_generator 100000 100 3 5 100000
-# tc GB-71 random_generator 100000 100 3 10 100000
-# tc GB-72 random_generator 100000 100 3 100 100000
+tc GA-21 path_many_weights 1000 left 100 100000 even
+tc GA-22 path_many_weights 1000 right 100 100000 even
+tc GA-23 path_many_weights 1000 left 100 100000 uniform
+tc GA-24 path_many_weights 1000 right 100 100000 uniform
+
+group GB 10
+tc GB-01 random_generator 500000 100000 1 1 100000
+tc GB-02 random_generator 500000 100000 1 2 100000
+tc GB-03 random_generator 500000 100000 1 4 100000
+tc GB-04 random_generator 500000 100000 1 5 100000
+tc GB-05 random_generator 500000 100000 1 10 100000
+tc GB-06 random_generator 500000 100000 1 100 100000
+tc GB-07 random_generator 500000 10000 1 1 100000
+tc GB-08 random_generator 500000 10000 1 2 100000
+tc GB-09 random_generator 500000 10000 1 4 100000
+tc GB-10 random_generator 500000 10000 1 5 100000
+tc GB-11 random_generator 500000 10000 1 10 100000
+tc GB-12 random_generator 500000 10000 1 100 100000
+tc GB-13 random_generator 500000 1000 1 1 100000
+tc GB-14 random_generator 500000 1000 1 2 100000
+tc GB-15 random_generator 500000 1000 1 4 100000
+tc GB-16 random_generator 500000 1000 1 5 100000
+tc GB-17 random_generator 500000 1000 1 10 100000
+tc GB-18 random_generator 500000 1000 1 100 100000
+tc GB-19 random_generator 500000 100 1 1 100000
+tc GB-20 random_generator 500000 100 1 2 100000
+tc GB-21 random_generator 500000 100 1 4 100000
+tc GB-22 random_generator 500000 100 1 5 100000
+tc GB-23 random_generator 500000 100 1 10 100000
+tc GB-24 random_generator 500000 100 1 100 100000
+tc GB-25 random_generator 500000 100000 2 1 100000
+tc GB-26 random_generator 500000 100000 2 2 100000
+tc GB-27 random_generator 500000 100000 2 4 100000
+tc GB-28 random_generator 500000 100000 2 5 100000
+tc GB-29 random_generator 500000 100000 2 10 100000
+tc GB-30 random_generator 500000 100000 2 100 100000
+tc GB-31 random_generator 500000 10000 2 1 100000
+tc GB-32 random_generator 500000 10000 2 2 100000
+tc GB-33 random_generator 500000 10000 2 4 100000
+tc GB-34 random_generator 500000 10000 2 5 100000
+tc GB-35 random_generator 500000 10000 2 10 100000
+tc GB-36 random_generator 500000 10000 2 100 100000
+tc GB-37 random_generator 500000 1000 2 1 100000
+tc GB-38 random_generator 500000 1000 2 2 100000
+tc GB-39 random_generator 500000 1000 2 4 100000
+tc GB-40 random_generator 500000 1000 2 5 100000
+tc GB-41 random_generator 500000 1000 2 10 100000
+tc GB-42 random_generator 500000 1000 2 100 100000
+tc GB-43 random_generator 500000 100 2 1 100000
+tc GB-44 random_generator 500000 100 2 2 100000
+tc GB-45 random_generator 500000 100 2 4 100000
+tc GB-46 random_generator 500000 100 2 5 100000
+tc GB-47 random_generator 500000 100 2 10 100000
+tc GB-48 random_generator 500000 100 2 100 100000
+tc GB-49 random_generator 500000 100000 3 1 100000
+tc GB-50 random_generator 500000 100000 3 2 100000
+tc GB-51 random_generator 500000 100000 3 4 100000
+tc GB-52 random_generator 500000 100000 3 5 100000
+tc GB-53 random_generator 500000 100000 3 10 100000
+tc GB-54 random_generator 500000 100000 3 100 100000
+tc GB-55 random_generator 500000 10000 3 1 100000
+tc GB-56 random_generator 500000 10000 3 2 100000
+tc GB-57 random_generator 500000 10000 3 4 100000
+tc GB-58 random_generator 500000 10000 3 5 100000
+tc GB-59 random_generator 500000 10000 3 10 100000
+tc GB-60 random_generator 500000 10000 3 100 100000
+tc GB-61 random_generator 500000 1000 3 1 100000
+tc GB-62 random_generator 500000 1000 3 2 100000
+tc GB-63 random_generator 500000 1000 3 4 100000
+tc GB-64 random_generator 500000 1000 3 5 100000
+tc GB-65 random_generator 500000 1000 3 10 100000
+tc GB-66 random_generator 500000 1000 3 100 100000
+tc GB-67 random_generator 500000 100 3 1 100000
+tc GB-68 random_generator 500000 100 3 2 100000
+tc GB-69 random_generator 500000 100 3 4 100000
+tc GB-70 random_generator 500000 100 3 5 100000
+tc GB-71 random_generator 500000 100 3 10 100000
+tc GB-72 random_generator 500000 100 3 100 100000
+
+tc GB-73 shakespeare 500000 1 100 100000
+tc GB-74 shakespeare 500000 2 100 100000
+tc GB-75 shakespeare 500000 3 100 100000
+tc GB-76 shakespeare 500000 4 100 100000
+tc GB-77 shakespeare 500000 5 100 100000
+tc GB-78 shakespeare 500000 6 100 100000
+tc GB-79 shakespeare 500000 7 100 100000
+tc GB-80 shakespeare 500000 8 100 100000
+tc GB-81 shakespeare 500000 9 100 100000
+tc GB-82 shakespeare 500000 10 100 100000
+tc GB-83 shakespeare 500000 1 200 100000
+tc GB-84 shakespeare 500000 2 200 100000
+tc GB-85 shakespeare 500000 3 200 100000
+tc GB-86 shakespeare 500000 4 200 100000
+tc GB-87 shakespeare 500000 5 200 100000
+tc GB-88 shakespeare 500000 6 200 100000
+tc GB-89 shakespeare 500000 7 200 100000
+tc GB-90 shakespeare 500000 8 200 100000
+tc GB-91 shakespeare 500000 9 200 100000
+tc GB-92 shakespeare 500000 10 200 100000
+tc GB-93 shakespeare 500000 1 1000 100000
+tc GB-94 shakespeare 500000 2 1000 100000
+tc GB-95 shakespeare 500000 3 1000 100000
+tc GB-96 shakespeare 500000 4 1000 100000
+tc GB-97 shakespeare 500000 5 1000 100000
+tc GB-98 shakespeare 500000 6 1000 100000
+tc GB-99 shakespeare 500000 7 1000 100000
+tc GB-100 shakespeare 500000 8 1000 100000
+tc GB-101 shakespeare 500000 9 1000 100000
+tc GB-102 shakespeare 500000 10 1000 100000
+
+tc GB-103 path_many_weights 500000 left 100 100000 even
+tc GB-104 path_many_weights 500000 right 100 100000 even
+tc GB-105 path_many_weights 500000 left 100 100000 uniform
+tc GB-106 path_many_weights 500000 right 100 100000 uniform
+tc GB-107 path_many_weights 500000 left 1000 100000 even
+tc GB-108 path_many_weights 500000 right 1000 100000 even
+tc GB-109 path_many_weights 500000 left 1000 100000 uniform
+tc GB-110 path_many_weights 500000 right 1000 100000 uniform
+tc GB-111 path_many_weights 500000 left 10000 100000 even
+tc GB-112 path_many_weights 500000 right 10000 100000 even
+tc GB-113 path_many_weights 500000 left 10000 100000 uniform
+tc GB-114 path_many_weights 500000 right 10000 100000 uniform
+tc GB-115 path_many_weights 500000 left 100000 100000 even
+tc GB-116 path_many_weights 500000 right 100000 100000 even
 
