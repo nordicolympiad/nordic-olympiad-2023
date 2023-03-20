@@ -41,27 +41,21 @@ tc GB-04 random_generator 500000 100000 10 100000 100000 1
 
 # complete search
 group GC 17
-tc GC-01 random_generator 2 100 1 10 70 7
-tc GC-02 random_generator 3 100 1 10 70 7
-tc GC-03 random_generator 4 100 1 10 70 7
-tc GC-04 random_generator 5 100 1 10 70 7
-tc GC-05 random_generator 6 100 1 10 70 7
-tc GC-06 random_generator 7 100 1 10 70 7
-tc GC-08 random_generator 3 100 2 10 70 7
-tc GC-09 random_generator 4 100 2 10 70 7
-tc GC-10 random_generator 5 100 2 10 70 7
-tc GC-11 random_generator 6 100 2 10 70 7
-tc GC-12 random_generator 7 100 2 10 70 7
-tc GC-13 random_generator 4 100 3 10 70 7
-tc GC-14 random_generator 5 100 3 10 70 7
-tc GC-15 random_generator 6 100 3 10 70 7
-tc GC-16 random_generator 7 100 3 10 70 7
-tc GC-17 random_generator 5 100 4 10 70 7
-tc GC-18 random_generator 6 100 4 10 70 7
-tc GC-19 random_generator 7 100 4 10 70 7
-tc GC-20 random_generator 6 100 5 10 70 7
-tc GC-21 random_generator 7 100 5 10 70 7
-tc GC-22 random_generator 7 100 6 10 70 7
+tc GC-01 random_generator 2 100 1 10 70 6
+tc GC-02 random_generator 3 100 1 10 70 6
+tc GC-03 random_generator 4 100 1 10 70 6
+tc GC-04 random_generator 5 100 1 10 70 6
+tc GC-05 random_generator 6 100 1 10 70 6
+tc GC-06 random_generator 3 100 2 10 70 6
+tc GC-07 random_generator 4 100 2 10 70 6
+tc GC-08 random_generator 5 100 2 10 70 6
+tc GC-09 random_generator 6 100 2 10 70 6
+tc GC-10 random_generator 4 100 3 10 70 6
+tc GC-11 random_generator 5 100 3 10 70 6
+tc GC-12 random_generator 6 100 3 10 70 6
+tc GC-13 random_generator 5 100 4 10 70 6
+tc GC-14 random_generator 6 100 4 10 70 6
+tc GC-15 random_generator 6 100 5 10 70 6
 
 # DP O(n*M)
 group GD 18
