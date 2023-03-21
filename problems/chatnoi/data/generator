@@ -31,6 +31,11 @@ tc GA-18 random_generator 65 100 8 78 78 1
 tc GA-19 random_generator 57 100 9 99 99 1
 tc GA-20 random_generator 99 100 10 97 97 1
 
+tc GA-21 loop 100 1 1 100 100
+tc GA-22 loop 100 2 1 100 100
+tc GA-23 loop 100 3 1 100 100
+tc GA-24 loop 100 10 1 100 100
+
 # m_i = 1
 group GB 7
 include_group GA
@@ -38,6 +43,11 @@ tc GB-01 random_generator 500000 100000 1 100000 100000 1
 tc GB-02 random_generator 500000 100000 3 100000 100000 1
 tc GB-03 random_generator 500000 100000 5 100000 100000 1
 tc GB-04 random_generator 500000 100000 10 100000 100000 1
+tc GB-05 path_many_weights 500000 left 100000 100000 even
+tc GB-06 path_many_weights 500000 right 100000 100000 even
+
+tc GB-07 loop 500000 1 10 100000 100000
+tc GB-09 loop 500000 3 10 100000 100000
 
 # complete search
 group GC 17
@@ -84,6 +94,11 @@ tc GD-23 path_many_weights 5000 right 100 5000 even
 tc GD-24 path_many_weights 5000 left 100 5000 uniform
 tc GD-25 path_many_weights 5000 right 100 5000 uniform
 
+tc GD-30 loop 5000 1 10 10 5000
+tc GD-31 loop 5000 2 10 10 5000
+tc GD-32 loop 5000 3 10 10 5000
+tc GD-33 loop 5000 10 10 10 5000
+
 # Binary search + SCC + Longest path O(q*n*log(n))
 group GE 24
 include_group GC
@@ -95,6 +110,16 @@ tc GE-08 random_generator 500000 10 8 10 500000 5*10**5
 tc GE-09 random_generator 500000 10 9 10 500000 5*10**5
 tc GE-10 random_generator 500000 10 10 10 500000 5*10**5
 tc GE-11 random_generator 413678 10 10 9 372658 5*10**5
+
+tc GE-12 path_many_weights 500000 left 10 100000 even
+tc GE-13 path_many_weights 500000 right 10 100000 even
+tc GE-14 path_many_weights 500000 left 10 100000 uniform
+tc GE-15 path_many_weights 500000 right 10 100000 uniform
+
+tc GE-20 loop 100000 1 10 10 500000
+tc GE-21 loop 100000 2 10 10 500000
+tc GE-22 loop 100000 3 10 10 500000
+tc GE-23 loop 100000 10 10 10 500000
 
 # SCC + Longest path for each unique weight O(n * sqrt(n))
 group GF 16
@@ -110,6 +135,18 @@ tc GF-08 random_generator 100000 10 8 100000 500000 5*10**5
 tc GF-09 random_generator 100000 10 9 100000 500000 5*10**5
 tc GF-10 random_generator 100000 10 10 100000 500000 5*10**5
 tc GF-11 random_generator 93678 10 10 43762 392658 5*10**5
+
+tc GF-12 path_many_weights 100000 left 10 100000 even
+tc GF-13 path_many_weights 100000 right 10 100000 even
+tc GF-14 path_many_weights 100000 left 1000 100000 uniform
+tc GF-15 path_many_weights 100000 right 1000 100000 uniform
+tc GF-16 path_many_weights 100000 left 10000 100000 even
+tc GF-17 path_many_weights 100000 right 10000 100000 even
+
+tc GF-22 loop 100000 1 10 100000 500000
+tc GF-23 loop 100000 2 10 100000 500000
+tc GF-24 loop 100000 3 10 100000 500000
+tc GF-25 loop 100000 10 10 100000 500000
 
 # SCC + Longest path for each unique weight with clever observation O(n * log(n))
 group GG 13
@@ -136,55 +173,18 @@ tc GG-72 random_generator 500000 100 10 100 100000 5*10**5
 tc GG-73 shakespeare 500000 1 100 100000
 tc GG-101 shakespeare 500000 10 1000 100000
 
-tc GG-103 path_many_weights 500000 left 100 100000 even
 tc GG-104 path_many_weights 500000 right 100 100000 even
-tc GG-105 path_many_weights 500000 left 100 100000 uniform
-tc GG-106 path_many_weights 500000 right 100 100000 uniform
 tc GG-107 path_many_weights 500000 left 1000 100000 even
-tc GG-108 path_many_weights 500000 right 1000 100000 even
-tc GG-109 path_many_weights 500000 left 1000 100000 uniform
-tc GG-110 path_many_weights 500000 right 1000 100000 uniform
 tc GG-111 path_many_weights 500000 left 10000 100000 even
-tc GG-112 path_many_weights 500000 right 10000 100000 even
-tc GG-113 path_many_weights 500000 left 10000 100000 uniform
 tc GG-114 path_many_weights 500000 right 10000 100000 uniform
 tc GG-115 path_many_weights 500000 left 100000 100000 even
-tc GG-116 path_many_weights 500000 right 100000 100000 even
 
-#tc GB-103 path_many_weights 500000 left 100 100000 even
-#tc GB-104 path_many_weights 500000 right 100 100000 even
-#tc GB-105 path_many_weights 500000 left 100 100000 uniform
-#tc GB-106 path_many_weights 500000 right 100 100000 uniform
-#tc GB-107 path_many_weights 500000 left 1000 100000 even
-#tc GB-108 path_many_weights 500000 right 1000 100000 even
-#tc GB-109 path_many_weights 500000 left 1000 100000 uniform
-#tc GB-110 path_many_weights 500000 right 1000 100000 uniform
-#tc GB-111 path_many_weights 500000 left 10000 100000 even
-#tc GB-112 path_many_weights 500000 right 10000 100000 even
-#tc GB-113 path_many_weights 500000 left 10000 100000 uniform
-#tc GB-114 path_many_weights 500000 right 10000 100000 uniform
-#tc GB-115 path_many_weights 500000 left 100000 100000 even
-#tc GB-116 path_many_weights 500000 right 100000 100000 even
+tc GG-118 star 500000 4 4 100000 500000
+tc GG-120 star 500000 13 13 100000 500000
+tc GG-122 star 500000 32 5 100000 500000
+tc GG-125 star 500000 4 17 100000 500000
+tc GG-128 star 500000 8 80 100000 500000
 
-# tc GB-117 star 500000 2 2 100000 500000
-# tc GB-118 star 500000 4 4 100000 500000
-# tc GB-119 star 500000 7 7 100000 500000
-# tc GB-120 star 500000 13 13 100000 500000
-# tc GB-121 star 500000 17 4 100000 500000
-# tc GB-122 star 500000 32 5 100000 500000
-# tc GB-123 star 500000 50 4 100000 500000
-# tc GB-124 star 500000 80 8 100000 500000
-# tc GB-125 star 500000 4 17 100000 500000
-# tc GB-126 star 500000 5 32 100000 500000
-# tc GB-127 star 500000 4 50 100000 500000
-# tc GB-128 star 500000 8 80 100000 500000
-
-# tc GB-129 loop 500000 1 1 100000 500000
-# tc GB-130 loop 500000 2 1 100000 500000
-# tc GB-131 loop 500000 3 1 100000 500000
-# tc GB-132 loop 500000 10 1 100000 500000
-# tc GB-133 loop 500000 1 10 100000 500000
-# tc GB-134 loop 500000 2 10 100000 500000
-# tc GB-135 loop 500000 3 10 100000 500000
-# tc GB-136 loop 500000 10 10 100000 500000
+tc GG-134 loop 500000 2 10 100000 500000
+tc GG-136 loop 500000 10 10 100000 500000
 
