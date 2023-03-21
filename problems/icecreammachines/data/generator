@@ -53,14 +53,14 @@ tc GD-spec-03 slow_index_of_generator 1000 200 100
 
 group GE 14
 include_group GD
-tc GE-01 random_generator 2*10**5 2*10**5 200 200 100 100
+tc GE-01 random_generator 2*10**5 2*10**5 500 500 100 100
 tc GE-02 random_generator 2*10**5 2*10**5 100 100 100 100
 for i in {03..05}; do
-tc GE-$i random_generator 1 2*10**5 1 200 1 100
+tc GE-$i random_generator 1 2*10**5 1 500 1 100
 done;
 tc GE-spec-01 specific_generator 2*10**5 100
 tc GE-spec-02 specific_generator 2*10**5 5
-tc GE-spec-03 slow_index_of_generator 2*10**5 200 100
+tc GE-spec-03 slow_index_of_generator 2*10**5 500 100
 
 group GF 13
 include_group GE
