@@ -1,10 +1,11 @@
 #!/usr/bin/python3
+import sys
 from queue import PriorityQueue
 
-n,m,k = [int(x) for x in input().split()]
+n,m,k = [int(x) for x in sys.stdin.readline().split()]
 A = []
 for x in range(n):
-    h = int(input())
+    h = int(sys.stdin.readline())
     A.append(h)
 
 mp = {}
@@ -18,27 +19,30 @@ for x in range(n-1,-1,-1):
 
 cnt = 0
 q = PriorityQueue()
-have = set()
+have = [False for _ in range(m+1)]
+havesz = 0
 NXT = {}
 
 for x in range(n):
-    if A[x] in have:
+    if have[A[x]]:
         NXT[A[x]] = want[x]
         q.put((-NXT[A[x]], A[x]))
     else:
-        while len(have) == k:
+        while havesz == k:
             next_item = q.get()
             a = next_item[0]
             b = next_item[1]
 
 
-            if b in have:
+            if have[b]:
                 if -a == NXT[b]:
-                    have.remove(b)
+                    have[b] = False
+                    havesz -= 1
         cnt += 1
         
         NXT[A[x]] = want[x]
-        have.add(A[x])
+        have[A[x]] = True
+        havesz += 1
         q.put((-NXT[A[x]], A[x]))
 
 
