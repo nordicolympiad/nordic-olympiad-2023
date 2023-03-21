@@ -5,5 +5,5 @@
 ### Tasks:
 
 - Ice Cream Machines
-- Island Allegiances
-- Ms. Incredible
+- Island Alliances
+- ChatNOI
