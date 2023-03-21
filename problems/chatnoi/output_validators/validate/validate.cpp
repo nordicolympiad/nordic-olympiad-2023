@@ -83,10 +83,12 @@ int main(int argc, char **argv) {
     if (author_score < judge_score) {
       wrong_answer("Wrong answer: author paragraph had lower score (%d) than judge (%d) for query %d.\n", author_score, judge_score, q+1);
     }
+    /*
     if (author_score > judge_score) {
       // TODO: Disable during contest?
       judge_error("Judge error: author paragraph had higher score (%d) than judge (%d) for query %d.\n", author_score, judge_score, q+1);
     }
+    */
   }
 
   string junk;
